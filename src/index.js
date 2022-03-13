@@ -4,15 +4,21 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux'
-import { BrowserRouter } from "react-router-dom";
-import store from './store'
+import {
+    // BrowserRouter, 
+    HashRouter
+} from "react-router-dom";
+import { store } from './store'
+// setup fake backend
+import { configureFakeBackend } from './helpers';
+configureFakeBackend();
 
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
-            <BrowserRouter>
+            <HashRouter>
                 <App />
-            </BrowserRouter>
+            </HashRouter>
         </Provider>
     </React.StrictMode>,
     document.getElementById('root')

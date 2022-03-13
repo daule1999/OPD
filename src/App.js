@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
+import { Router, Route, Switch, Redirect, Link } from 'react-router-dom';
+// import { connect } from 'react-redux';
+
+import { history } from './helpers/history';
+import { alertActions } from './actions/alert.actions';
+import { PrivateRoute } from './components/PrivateRoute';
+import { HomePage } from './components/HomePage/HomePage';
+import { LoginPage } from './components/LogInPage/LoginPage';
+import { RegisterPage } from './components/RegisterPage/RegisterPage';
 
 import sendAsync from './message-control/renderer';
 import { printData } from "./message-control/renderer"
 import './App.css';
-import { Counter } from './feautures/counter/Counter';
 
 function App() {
     const [message, setMessage] = useState('SELECT * FROM repositories');
@@ -15,13 +23,21 @@ function App() {
 
     return (
         <div className="App">
-            <header className="App-header">
+            <RegisterPage />
+            {/* <header className="App-header">
                 <h1>
                     Standalone application with Electron, React, and
                     SQLite stack.
                 </h1>
-            </header>
-            <article>
+            </header> */}
+            <div className="jumbotron">
+                <div className="container">
+                    <Link to="/">Homepage</Link>
+                    <div className="col-sm-8 col-sm-offset-2">
+                        {/* {alert.message &&
+                            <div className={`alert ${alert.type}`}>{alert.message}</div>
+                        } */}
+                        {/* <article>
                 <p>
                     Say <i>ping</i> to the main process.
                 </p>
@@ -40,11 +56,68 @@ function App() {
                     {(response && JSON.stringify(response, null, 2)) ||
                         'No query results yet!'}
                 </pre>
-            </article>
-            <Counter />
-            <button onClick={printData}>print</button>
+            </article> */}
+                        {/* <button onClick={printData}>print</button> */}
+                        <Router history={history}>
+                            <Switch>
+                                <PrivateRoute exact path="/" component={HomePage} />
+                                <Route path="/login" component={LoginPage} />
+                                <Route path="/register" component={RegisterPage} />
+                                <Redirect from="*" to="/" />
+                            </Switch>
+                        </Router>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
 
 export default App;
+// import React from 'react';
+
+
+// class App extends React.Component {
+//     constructor(props) {
+
+//         history.listen((location, action) => {
+//             // clear alert on location change
+//             this.props.clearAlerts();
+//         });
+//     }
+
+//     render() {
+//         const { alert } = this.props;
+//         return (
+//             <div className="jumbotron">
+//                 <div className="container">
+//                     <div className="col-sm-8 col-sm-offset-2">
+//                         {alert.message &&
+//                             <div className={`alert ${alert.type}`}>{alert.message}</div>
+//                         }
+//                         <Router history={history}>
+//                             <Switch>
+//                                 <PrivateRoute exact path="/" component={HomePage} />
+//                                 <Route path="/login" component={LoginPage} />
+//                                 <Route path="/register" component={RegisterPage} />
+//                                 <Redirect from="*" to="/" />
+//                             </Switch>
+//                         </Router>
+//                     </div>
+//                 </div>
+//             </div>
+//         );
+//     }
+// }
+
+// function mapState(state) {
+//     const { alert } = state;
+//     return { alert };
+// }
+
+// const actionCreators = {
+//     clearAlerts: alertActions.clear
+// };
+
+// const connectedApp = connect(mapState, actionCreators)(App);
+// export { connectedApp as App };
