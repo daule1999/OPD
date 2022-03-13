@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
-import { Router, Route, Switch, Redirect, Link } from 'react-router-dom';
+import {
+    // Router,
+    Route, Switch, Redirect, Link
+} from 'react-router-dom';
 // import { connect } from 'react-redux';
 
-import { history } from './helpers/history';
-import { alertActions } from './actions/alert.actions';
+// import { history } from './helpers/history';
+// import { alertActions } from './actions/alert.actions';
 import { PrivateRoute } from './components/PrivateRoute';
 import { HomePage } from './components/HomePage/HomePage';
 import { LoginPage } from './components/LogInPage/LoginPage';
 import { RegisterPage } from './components/RegisterPage/RegisterPage';
 
 import sendAsync from './message-control/renderer';
-import { printData } from "./message-control/renderer"
+// import { printData } from "./message-control/renderer"
 import './App.css';
 
 function App() {
-    const [message, setMessage] = useState('SELECT * FROM repositories');
+    // const [message, setMessage] = useState('SELECT * FROM repositories');
     const [response, setResponse] = useState();
 
     function send(sql) {
@@ -23,7 +26,6 @@ function App() {
 
     return (
         <div className="App">
-            <RegisterPage />
             {/* <header className="App-header">
                 <h1>
                     Standalone application with Electron, React, and
@@ -58,14 +60,14 @@ function App() {
                 </pre>
             </article> */}
                         {/* <button onClick={printData}>print</button> */}
-                        <Router history={history}>
-                            <Switch>
-                                <PrivateRoute exact path="/" component={HomePage} />
-                                <Route path="/login" component={LoginPage} />
-                                <Route path="/register" component={RegisterPage} />
-                                <Redirect from="*" to="/" />
-                            </Switch>
-                        </Router>
+                        {/* <Router history={history}> */}
+                        <Switch>
+                            <PrivateRoute exact path="/" component={HomePage} />
+                            <Route path="/login" component={LoginPage} />
+                            <Route path="/register" component={RegisterPage} />
+                            <Redirect from="*" to="/" />
+                        </Switch>
+                        {/* </Router> */}
                     </div>
                 </div>
             </div>

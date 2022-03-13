@@ -9,6 +9,7 @@ import {
     HashRouter
 } from "react-router-dom";
 import { store } from './store'
+import { history } from './helpers/history'
 // setup fake backend
 import { configureFakeBackend } from './helpers';
 configureFakeBackend();
@@ -16,7 +17,7 @@ configureFakeBackend();
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
-            <HashRouter>
+            <HashRouter history={history}>
                 <App />
             </HashRouter>
         </Provider>
