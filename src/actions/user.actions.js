@@ -3,35 +3,43 @@ import { userService } from '../services/user.service';
 import { alertActions } from './alert.actions';
 import { history } from '../helpers/history';
 
-export const userActions = {
-  login,
-  logout,
-  register,
-  getAll,
-  delete: _delete
-};
 
-function login(username, password) {
-  return dispatch => {
-    dispatch(request({ username }));
 
-    userService.login(username, password)
-      .then(
-        user => {
-          dispatch(success(user));
-          history.push('/');
-        },
-        error => {
-          dispatch(failure(error.toString()));
-          dispatch(alertActions.error(error.toString()));
-        }
-      );
-  };
+// function login(username, password) {
+//   return dispatch => {
+//     dispatch(request({ username }));
 
-  function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
-  function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
-  function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+//     userService.login(username, password)
+//       .then(
+//         user => {
+//           dispatch(success(user));
+//           history.push('/');
+//         },
+//         error => {
+//           dispatch(failure(error.toString()));
+//           dispatch(alertActions.error(error.toString()));
+//         }
+//       );
+//   };
+const login = (username, password) => {
+  console.log(username, password, 'username')
+  return (dispatch) => {
+    dispatch(request({ username }))
+    try {
+      const response = userService.login(username, password)
+      dispatch(success(response))
+      return response
+    } catch (error) {
+      console.log(error)
+      dispatch(failure(error))
+    }
+  }
 }
+
+function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
+function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
+function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+
 
 function logout() {
   userService.logout();
@@ -93,3 +101,11 @@ function _delete(id) {
   function success(id) { return { type: userConstants.DELETE_SUCCESS, id } }
   function failure(id, error) { return { type: userConstants.DELETE_FAILURE, id, error } }
 }
+
+export const userActions = {
+  login,
+  logout,
+  register,
+  getAll,
+  delete: _delete
+};

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import { withRouter } from "react-router";
 import { userActions } from '../../actions/user.actions';
 
 
@@ -33,7 +33,8 @@ class LoginPage extends React.Component {
     this.setState({ submitted: true });
     const { username, password } = this.state;
     if (username && password) {
-      this.props.login(username, password);
+      const res = this.props.login(username, password);
+      console.log(res)
     }
   }
 
@@ -81,5 +82,5 @@ const actionCreators = {
   logout: userActions.logout
 };
 
-const connectedLoginPage = connect(mapState, actionCreators)(LoginPage);
+const connectedLoginPage = connect(mapState, actionCreators)(withRouter(LoginPage));
 export { connectedLoginPage as LoginPage };

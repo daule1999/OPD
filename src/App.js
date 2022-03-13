@@ -44,7 +44,7 @@ function App() {
                     'No query results yet!'}
             </pre> */}
             <Switch>
-                <PrivateRoute exact path="/" component={HomePage} />
+                <PrivateRoute exact path="/" component={RegisterPage} />
                 <Route path="/login" component={LoginPage} />
                 <Route path="/register" component={RegisterPage} />
                 <Redirect from="*" to="/" />

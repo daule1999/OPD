@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppBar, MenuItem, Tooltip, Button, Avatar, Container, Menu, Typography, IconButton, Toolbar, Box } from '@mui/material';
 // import MenuIcon from '@mui/icons-material/Menu';
-
+import { Link } from 'react-router-dom';
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -47,7 +47,7 @@ const NavBar = () => {
               color="inherit"
             >
               {/* <MenuIcon /> */}
-              <Typography>Logo</Typography>
+              <Link to="/">Logo</Link>
             </IconButton>
             <Menu
               id="menu-appbar"
