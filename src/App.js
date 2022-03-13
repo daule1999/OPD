@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
 import sendAsync from './message-control/renderer';
-
+import { printData } from "./message-control/renderer"
 import './App.css';
+import { Counter } from './feautures/counter/Counter';
 
 function App() {
     const [message, setMessage] = useState('SELECT * FROM repositories');
@@ -40,6 +41,8 @@ function App() {
                         'No query results yet!'}
                 </pre>
             </article>
+            <Counter />
+            <button onClick={printData}>print</button>
         </div>
     );
 }
