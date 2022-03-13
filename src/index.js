@@ -14,6 +14,8 @@ import { history } from './helpers/history'
 import { configureFakeBackend } from './helpers';
 configureFakeBackend();
 
+
+
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>

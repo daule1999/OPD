@@ -4,16 +4,18 @@ import { connect } from 'react-redux';
 
 import { userActions } from '../../actions/user.actions';
 
+
 class RegisterPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       user: {
-        firstName: '',
-        lastName: '',
-        username: '',
-        password: ''
+        OPDName: '',
+        DoctorName: '',
+        Qualification: '',
+        OPDAddress: '',
+        OPDMobileNo: []
       },
       submitted: false
     };

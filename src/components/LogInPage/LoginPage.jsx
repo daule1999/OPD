@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { userActions } from '../../actions/user.actions';
 
+
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);

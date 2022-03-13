@@ -15,6 +15,7 @@ import { RegisterPage } from './components/RegisterPage/RegisterPage';
 import sendAsync from './message-control/renderer';
 // import { printData } from "./message-control/renderer"
 import './App.css';
+import NavBar from './components/NavBar/NavBar';
 
 function App() {
     // const [message, setMessage] = useState('SELECT * FROM repositories');
@@ -26,52 +27,30 @@ function App() {
 
     return (
         <div className="App">
-            {/* <header className="App-header">
-                <h1>
-                    Standalone application with Electron, React, and
-                    SQLite stack.
-                </h1>
-            </header> */}
-            <div className="jumbotron">
-                <div className="container">
-                    <Link to="/">Homepage</Link>
-                    <div className="col-sm-8 col-sm-offset-2">
-                        {/* {alert.message &&
-                            <div className={`alert ${alert.type}`}>{alert.message}</div>
-                        } */}
-                        {/* <article>
-                <p>
-                    Say <i>ping</i> to the main process.
-                </p>
-                <input
-                    type="text"
-                    value={message}
-                    onChange={({ target: { value } }) => setMessage(value)}
-                />
-                <button type="button" onClick={() => send(message)}>
-                    Send
-                </button>
-                <br />
-                <p>Main process responses:</p>
-                <br />
-                <pre>
-                    {(response && JSON.stringify(response, null, 2)) ||
-                        'No query results yet!'}
-                </pre>
-            </article> */}
-                        {/* <button onClick={printData}>print</button> */}
-                        {/* <Router history={history}> */}
-                        <Switch>
-                            <PrivateRoute exact path="/" component={HomePage} />
-                            <Route path="/login" component={LoginPage} />
-                            <Route path="/register" component={RegisterPage} />
-                            <Redirect from="*" to="/" />
-                        </Switch>
-                        {/* </Router> */}
-                    </div>
-                </div>
-            </div>
+            <NavBar />
+            {/* <input
+                type="text"
+                value={message}
+                onChange={({ target: { value } }) => setMessage(value)}
+            />
+            <button type="button" onClick={() => send(message)}>
+                Send
+            </button>
+            <br />
+            <p>Main process responses:</p>
+            <br />
+            <pre>
+                {(response && JSON.stringify(response, null, 2)) ||
+                    'No query results yet!'}
+            </pre> */}
+            <Switch>
+                <PrivateRoute exact path="/" component={HomePage} />
+                <Route path="/login" component={LoginPage} />
+                <Route path="/register" component={RegisterPage} />
+                <Redirect from="*" to="/" />
+            </Switch>
         </div>
+
     );
 }
 
