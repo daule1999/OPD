@@ -1,46 +1,58 @@
-var sqlite3 = require('sqlite3').verbose();
-var db;
+const sqlite3 = window.require('sqlite3')
+const Promise = window.require('bluebird');
 
-function createDb() {
-  console.log("creating db.......");
-  db = new sqlite3.Database('database.sqlite3', () => {
-    console.log("db created")
-  });
-  return db;
-}
-function createTable() {
-  console.log("createTable AllPatient");
-  db.run("CREATE TABLE IF NOT EXISTS Patient (info TEXT)", insertRows);
-}
-
-function insertRows() {
-  console.log("insertRows Ipsum i");
-  var stmt = db.prepare("INSERT INTO lorem VALUES (?)");
-
-  for (var i = 0; i < 10; i++) {
-    stmt.run("Ipsum " + i);
+class AppDAO {
+  constructor(dbFilePath) {
+    this.db = new sqlite3.Database(dbFilePath, (err) => {
+      if (err) {
+        console.log('Could not connect to database', err)
+      } else {
+        console.log('Connected to database')
+      }
+    })
   }
 
-  stmt.finalize(readAllRows);
+  run(sql, params = []) {
+    return new Promise((resolve, reject) => {
+      this.db.run(sql, params, function (err) {
+        if (err) {
+          console.log('Error running sql ' + sql)
+          console.log(err)
+          reject(err)
+        } else {
+          resolve({ id: this.lastID })
+        }
+      })
+    })
+  }
+
+  get(sql, params = []) {
+    return new Promise((resolve, reject) => {
+      this.db.get(sql, params, (err, result) => {
+        if (err) {
+          console.log('Error running sql: ' + sql)
+          console.log(err)
+          reject(err)
+        } else {
+          resolve(result)
+        }
+      })
+    })
+  }
+
+  all(sql, params = []) {
+    return new Promise((resolve, reject) => {
+      this.db.all(sql, params, (err, rows) => {
+        if (err) {
+          console.log('Error running sql: ' + sql)
+          console.log(err)
+          reject(err)
+        } else {
+          resolve(rows)
+        }
+      })
+    })
+  }
 }
 
-function readAllRows() {
-  console.log("readAllRows lorem");
-  db.all("SELECT rowid AS id, info FROM lorem", function (err, rows) {
-    rows.forEach(function (row) {
-      console.log(row.id + ": " + row.info);
-    });
-    closeDb();
-  });
-}
-
-function closeDb() {
-  console.log("closeDb");
-  db.close();
-}
-
-function runChainExample() {
-  createDb();
-}
-
-runChainExample();
+export default AppDAO
