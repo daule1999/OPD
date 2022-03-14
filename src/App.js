@@ -11,7 +11,10 @@ import { PrivateRoute } from './components/PrivateRoute';
 import { HomePage } from './components/HomePage/HomePage';
 import { LoginPage } from './components/LogInPage/LoginPage';
 import { RegisterPage } from './components/RegisterPage/RegisterPage';
-
+import LogIn from './components/LogInPage/LogIn'
+import SignUp from './components/RegisterPage/SignUp'
+import Profile from './components/OPD/Profile'
+import BookPatients from './components/Patients/BookPatients'
 import sendAsync from './message-control/renderer';
 // import { printData } from "./message-control/renderer"
 import './App.css';
@@ -44,9 +47,28 @@ function App() {
                     'No query results yet!'}
             </pre> */}
             <Switch>
-                <PrivateRoute exact path="/" component={RegisterPage} />
-                <Route path="/login" component={LoginPage} />
-                <Route path="/register" component={RegisterPage} />
+                <PrivateRoute exact
+                    path="/"
+                    render={(props) => <SignUp {...props} />} />
+                {/* <Route path="/login" component={LoginPage} /> */}
+                {/* <Route path="/register" component={RegisterPage} /> */}
+                <Route exact path="/LogIn" render={(props) => <LogIn {...props} />} />
+                <Route
+                    exact
+                    path="/SignUp"
+                    render={(props) => <SignUp {...props} />}
+                />
+                <Route
+                    exact
+                    path="/profile"
+                    render={(props) => <Profile{...props} />}
+                />
+                <Route
+                    exact
+                    path="/patient"
+                    render={(props) => <BookPatients{...props} />}
+                />
+
                 <Redirect from="*" to="/" />
             </Switch>
         </div>
