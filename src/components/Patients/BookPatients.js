@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import uniqueRandom from 'unique-random';
+import PatientForm from './PatientForm';
 // import Promise from "bluebird";
 const AppDAO = require('../../services/appDao').default
 const PatientCrud = require('../../services/patientCrud').default
@@ -112,6 +113,7 @@ function BookPatients() {
       Book Patients
       <button onClick={clickHandler}>Add Data</button>
       <button onClick={createHandler}>createTable</button>
+      <PatientForm />
     </div>
   )
 }
