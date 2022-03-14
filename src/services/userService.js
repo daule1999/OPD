@@ -13,9 +13,9 @@ export const userService = {
 };
 
 async function login(username, password) {
-  const session_url = "/users/login"//"http://localhost:5003/users/login" 
-  const uname = username;
-  const pass = password;
+  // const session_url = "/users/login"//"http://localhost:5003/users/login" 
+  // const uname = username;
+  // const pass = password;
   // return await axios
   //   .post(
   //     session_url,
@@ -47,7 +47,7 @@ async function login(username, password) {
 
 async function logout() {
   // remove user from local storage to log user out
-  const session_url = "/users/login" //"http://localhost:5003/users/login" //`${axiosUrl}+/users/logout`;
+  // const session_url = "/users/login" //"http://localhost:5003/users/login" //`${axiosUrl}+/users/logout`;
   // return await axios
   //   .get(session_url, {})
   //   .then((response) => {
@@ -82,7 +82,7 @@ function getById(id) {
 
 async function register(user) {
   // const session_url = `${axiosUrl}+/users/signup`;
-  const session_url = "/users/signup" //"http://localhost:5003/users/signup";
+  // const session_url = "/users/signup" //"http://localhost:5003/users/signup";
   // return await axios
   //   .post(session_url, user, {
   //     headers: {

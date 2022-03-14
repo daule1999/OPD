@@ -11,8 +11,8 @@ import {
 import { store } from './store'
 import { history } from './helpers/history'
 // setup fake backend
-// import { configureFakeBackend } from './helpers';
-// configureFakeBackend();
+import { configureFakeBackend } from './helpers';
+configureFakeBackend();
 
 
 

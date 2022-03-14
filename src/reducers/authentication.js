@@ -10,8 +10,8 @@ const initialState = {
     username: "Bhola",
     password: "123456789",
   },
-  loggedIn: true,
-  isAuthAllowed: true
+  loggedIn: false,
+  isAuthAllowed: false
 };
 
 export function authentication(state = initialState, action) {

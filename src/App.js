@@ -1,32 +1,32 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     // Router,
-    Route, Switch, Redirect, Link
+    Route, Switch, Redirect
 } from 'react-router-dom';
 // import { connect } from 'react-redux';
 
 // import { history } from './helpers/history';
 // import { alertActions } from './actions/alert.actions';
-import { PrivateRoute } from './components/PrivateRoute';
-import { HomePage } from './components/HomePage/HomePage';
-import { LoginPage } from './components/LogInPage/LoginPage';
-import { RegisterPage } from './components/RegisterPage/RegisterPage';
+// import { PrivateRoute } from './components/PrivateRoute';
+import HomePage from './components/HomePage/HomePage';
+// import { LoginPage } from './components/LogInPage/LoginPage';
+// import { RegisterPage } from './components/RegisterPage/RegisterPage';
 import LogIn from './components/LogInPage/LogIn'
 import SignUp from './components/RegisterPage/SignUp'
 import Profile from './components/OPD/Profile'
 import BookPatients from './components/Patients/BookPatients'
-import sendAsync from './message-control/renderer';
+// import sendAsync from './message-control/renderer';
 // import { printData } from "./message-control/renderer"
 import './App.css';
 import NavBar from './components/NavBar/NavBar';
 
 function App() {
     // const [message, setMessage] = useState('SELECT * FROM repositories');
-    const [response, setResponse] = useState();
+    // const [response, setResponse] = useState();
 
-    function send(sql) {
-        sendAsync(sql).then((result) => setResponse(result));
-    }
+    // function send(sql) {
+    //     sendAsync(sql).then((result) => setResponse(result));
+    // }
 
     return (
         <div className="App">
@@ -47,11 +47,16 @@ function App() {
                     'No query results yet!'}
             </pre> */}
             <Switch>
-                <PrivateRoute exact
+                {/* <PrivateRoute exact
                     path="/"
-                    render={(props) => <SignUp {...props} />} />
+                    render={(props) => <SignUp {...props} />} /> */}
                 {/* <Route path="/login" component={LoginPage} /> */}
                 {/* <Route path="/register" component={RegisterPage} /> */}
+                <Route
+                    exact
+                    path="/"
+                    render={(props) => <HomePage {...props} />}
+                />
                 <Route exact path="/LogIn" render={(props) => <LogIn {...props} />} />
                 <Route
                     exact

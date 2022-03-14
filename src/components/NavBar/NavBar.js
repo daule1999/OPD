@@ -129,6 +129,7 @@
 //   );
 // };
 // export default NavBar;
+import React, { useEffect, useState } from "react";
 import {
   AppBar,
   Avatar,
@@ -148,8 +149,6 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 
 import MenuIcon from "@material-ui/icons/Menu";
-import React, { useEffect } from "react";
-import { useState } from "react";
 import { userActions } from "../../actions/user"
 
 // import { useHistory } from "react-router-dom";
@@ -271,7 +270,7 @@ function NavBar(props) {
 
           {isMobile ? (
             <>
-              <Grid container justify="space-between">
+              <Grid container justifyContent="space-between">
                 <Grid item>
                   <IconButton
                     edge="start"
