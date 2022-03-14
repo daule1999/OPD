@@ -1,28 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import uniqueRandom from 'unique-random';
 // import Promise from "bluebird";
 const AppDAO = require('../../services/appDao').default
 const PatientCrud = require('../../services/patientCrud').default
-var rn = require('random-number');
-var gen = rn.generator({
-  min: 2
-  , max: 1000
-  , integer: true
-})
 
-const data = {
-  Pid: gen(),
-  UId: "1",
-  Tid: "1",
-  Name: "Daule",
-  Address: "Manpur Gaya",
-  Age: "34",
-  sex: "Male",
-  CurrentTemp: "99",
-  CurrentBp: "70/90",
-  CurrentOxygen: "20",
-  dateOfAppoint: "12/03/22",
-  dateOfBooking: "12/03/22"
-}
 
 function BookPatients() {
   function setDatabase() {
@@ -97,10 +78,27 @@ function BookPatients() {
   //   // this.db.delete(key);
   // }
 
+
   const [db, setDb] = useState(null)
   useEffect(() => {
     setDb(setDatabase())
   }, [])
+  const random = uniqueRandom(1, 10000000);
+
+  const data = {
+    Pid: random(),
+    UId: "1",
+    Tid: "1",
+    Name: "Daule",
+    Address: "Manpur Gaya",
+    Age: "34",
+    sex: "Male",
+    CurrentTemp: "99",
+    CurrentBp: "70/90",
+    CurrentOxygen: "20",
+    dateOfAppoint: "12/03/22",
+    dateOfBooking: "12/03/22"
+  }
   const clickHandler = async () => {
     const res = await db.insertData(data)
     console.log(res, " insert data")
