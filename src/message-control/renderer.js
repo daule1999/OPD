@@ -35,8 +35,8 @@ const data = [{ type: 'text', value: 'This is sample thermal print' }, {
     // custom style for the table footer
     tableFooterStyle: 'background-color: #000; color: white;',
 },]
-export function printData() {
-    console.log('printing......')
+export function printData(data) {
+    console.log('printing......', data)
     ipcRenderer.send('print', JSON.stringify(data))
 }
 

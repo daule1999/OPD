@@ -16,6 +16,7 @@
     "@testing-library/user-event": "^13.5.0",
     "bluebird": "^3.7.2",
     "cross-env": "6.0.2",
+    "electron-devtools-installer": "^3.2.0",
     "electron-is-dev": "^2.0.0",
     "electron-log": "^3.0.8",
     "electron-pos-printer": "^1.2.4",
@@ -53,8 +54,46 @@
     "react-eject": "react-scripts eject",
     "electron-build": "electron-builder",
     "release": "yarn react-build && electron-builder --publish=always",
-    "dist:win": "npm run build && electron-builder --win"
+    "dist:win": "npm run build && electron-builder --win",
+    "package-win": "electron-packager . App--overwrite --platform=win32 --arch=ia32 --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"App\""
   },
+  "win": {
+    "target": [
+      "nsis",
+      "msi"
+    ],
+    "extraResources": [
+      {
+        "from": "app/dist/redistributable/",
+        "to": "../",
+        "filter": "*"
+      }
+    ],
+    "files": [
+      "!node_modules/opencv-build/opencv/opencv/",
+      "!node_modules/opencv-build/opencv/opencv_contrib/",
+      "!node_modules/opencv-build/opencv/build/3rdparty/",
+      "!node_modules/opencv-build/opencv/build/CMakeFiles/",
+      "!node_modules/opencv-build/opencv/build/data/",
+      "!node_modules/opencv-build/opencv/build/doc/",
+      "!node_modules/opencv-build/opencv/build/downloads/",
+      "!node_modules/opencv-build/opencv/build/etc/",
+      "!node_modules/opencv-build/opencv/build/include/",
+      "!node_modules/opencv-build/opencv/build/junk/",
+      "!node_modules/opencv-build/opencv/build/lib/",
+      "!node_modules/opencv-build/opencv/build/modules/",
+      "!node_modules/opencv-build/opencv/build/opencv2/",
+      "!node_modules/opencv-build/opencv/build/testdata/",
+      "!node_modules/opencv-build/opencv/build/win-install/",
+      "!node_modules/opencv-build/opencv/build/x64/",
+      "!node_modules/opencv-build/opencv/build/bin/Debug/",
+      "!node)modules/electron-pos-printer/dist/post-printer/"
+    ]
+  },
+  "asarUnpack": [
+    "**/*.node"
+  ],
+  "asar": false,
   "build": {
     "appId": "com.example.electron-cra",
     "files": [
@@ -84,10 +123,10 @@
     ]
   },
   "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.63",
     "concurrently": "^7.0.0",
     "electron": "^9.1.2",
     "electron-builder": "^22.14.13",
-    "electron-devtools-installer": "^3.2.0",
     "electron-rebuild": "^1.11.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-prettier": "^6.10.1",

@@ -1,8 +1,8 @@
 const electron = require('electron');
-// require('../src/message-control/main');
+
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
-
+// require('../src/message-control/main');
 const path = require('path');
 const url = require('url');
 const isDev = require('electron-is-dev');
@@ -10,6 +10,11 @@ const { sqlite3 } = require('sqlite3')
 const Promise = require('bluebird');
 
 let mainWindow;
+try {
+  require("../src/message-control/main")
+} catch (err) {
+  console.log(err, "Could not load main from message control")
+}
 
 function createWindow() {
   mainWindow = new BrowserWindow({

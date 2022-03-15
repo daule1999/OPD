@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import uniqueRandom from 'unique-random';
+// import uniqueRandom from 'unique-random';
+import { printData } from "../../message-control/renderer"
 import PatientForm from './PatientForm';
+import PrinterComp from './PrinterComp';
+
 // import Promise from "bluebird";
 const AppDAO = require('../../services/appDao').default
 const PatientCrud = require('../../services/patientCrud').default
@@ -81,39 +84,51 @@ function BookPatients() {
 
 
   const [db, setDb] = useState(null)
+  const [showForm, setshowForm] = useState(true)
+  const [currId, setcurrId] = useState(null)
   useEffect(() => {
     setDb(setDatabase())
   }, [])
-  const random = uniqueRandom(1, 10000000);
-
-  const data = {
-    Pid: random(),
-    UId: "1",
-    Tid: "1",
-    Name: "Daule",
-    Address: "Manpur Gaya",
-    Age: "34",
-    sex: "Male",
-    CurrentTemp: "99",
-    CurrentBp: "70/90",
-    CurrentOxygen: "20",
-    dateOfAppoint: "12/03/22",
-    dateOfBooking: "12/03/22"
+  // const random = uniqueRandom(1, 10000000);
+  // const data = {
+  //   Pid: random(),
+  //   UId: "1",
+  //   Tid: "1",
+  //   Name: "Daule",
+  //   Address: "Manpur Gaya",
+  //   Age: "34",
+  //   sex: "Male",
+  //   CurrentTemp: "99",
+  //   CurrentBp: "70/90",
+  //   CurrentOxygen: "20",
+  //   dateOfAppoint: "12/03/22",
+  //   dateOfBooking: "12/03/22"
+  // }
+  // const clickHandler = async () => {
+  //   const res = await db.insertData(data)
+  //   console.log(res, " insert data")
+  // }
+  // const createHandler = async () => {
+  //   const res = await db.createTable()
+  //   console.log(res, "create table")
+  // }
+  console.log(db)
+  const closeForm = (val) => {
+    setshowForm(val)
   }
-  const clickHandler = async () => {
-    const res = await db.insertData(data)
-    console.log(res, " insert data")
+  const setId = (id) => {
+    setcurrId(id)
   }
-  const createHandler = async () => {
-    const res = await db.createTable()
-    console.log(res, "create table")
+  const setPrint = (data) => {
+    printData(data)
   }
   return (
     <div>
       Book Patients
-      <button onClick={clickHandler}>Add Data</button>
-      <button onClick={createHandler}>createTable</button>
-      <PatientForm />
+      {/* <button onClick={clickHandler}>Add Data</button>
+      <button onClick={createHandler}>createTable</button> */}
+      {showForm && <PatientForm closeForm={closeForm} setId={setId} />}
+      {!showForm && <PrinterComp id={currId} setPrint={setPrint}></PrinterComp>}
     </div>
   )
 }

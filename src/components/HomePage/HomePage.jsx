@@ -3,7 +3,7 @@ import {
   // useDispatch,
   useSelector
 } from "react-redux";
-import TodoList from '../../Sqlite3/TodoList';
+// import TodoList from '../../Sqlite3/TodoList';
 function HomePage() {
   const isLoggeIn = useSelector((state) => state.authentication.loggedIn);
   const user = useSelector((state) => state.user);
@@ -12,7 +12,8 @@ function HomePage() {
     <div>
       {isLoggeIn && <div>Logged in as <pre>{user}</pre></div>}
       {isAuthAllowed && <div>Auth is alllowed</div>}
-      <TodoList />
+      {/* <TodoList /> */}
+      This is HomePage (under development)
     </div>
   )
 }

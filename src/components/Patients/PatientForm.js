@@ -5,6 +5,20 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import React from "react";
 import { Box, Grid, MenuItem } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import {
+  useDispatch,
+  // useSelector
+} from "react-redux";
+import { patientActions } from "../../actions/patients"
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+}));
 
 const patientSchema = yup.object().shape({
   name: yup.string().required("Enter a valid Name"),
@@ -17,52 +31,63 @@ const patientSchema = yup.object().shape({
   CurrentBp: yup.string().optional(),
   CurrentOxygen: yup.string().optional()
 });
-const PatientForm = () => {
-  // const intialValues = {
-  //   UId: "1",
-  //   Tid: "1",
-  //   name: "Daule",
-  //   address: "Manpur Gaya",
-  //   Age: "34",
-  //   gender: "Male",
-  //   CurrentTemp: "99",
-  //   CurrentBp: "70/90",
-  //   CurrentOxygen: "20",
-  //   dateOfAppoint: "12/03/22",
-  //   dateOfBooking: "12/03/22"
-  // };
-
+const PatientForm = ({ closeForm, setId }) => {
+  const intialValues = {
+    UId: "1",
+    Tid: "1",
+    name: "Daule",
+    address: "Manpur Gaya",
+    age: 23,
+    gender: "Male",
+    currentTemp: "99",
+    currentBp: "70/90",
+    currentOxygen: "20",
+    dateOfAppoint: "12/03/22",
+    dateOfBooking: "12/03/22"
+  };
+  const classes = useStyles();
+  const dispatch = useDispatch();
   const formik = useFormik({
-    initialValues: {
-      UId: "",
-      Tid: "",
-      name: "",
-      address: "",
-      age: "",
-      gender: "",
-      currentTemp: "",
-      currentBp: "",
-      currentOxygen: "",
-      dateOfAppoint: "",
-      dateOfBooking: ""
-    },
+    initialValues: intialValues,
+    // {
+    //   UId: "",
+    //   Tid: "",
+    //   name: "",
+    //   address: "",
+    //   age: "",
+    //   gender: "",
+    //   currentTemp: "",
+    //   currentBp: "",
+    //   currentOxygen: "",
+    //   dateOfAppoint: "",
+    //   dateOfBooking: ""
+    // },
     validationSchema: patientSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+      // alert(JSON.stringify(values, null, 2));
+      console.log(values, " in forms")
+      const res = await dispatch(patientActions.add(values))
+      console.log("added ", res)
+      if (res) {
+        setId(res.PID)
+        closeForm(false)
+      }
     },
   });
 
+
   return (
     <Box mx={9}>
-      <form onSubmit={formik.handleSubmit}>
+      <form className={classes.root} onSubmit={formik.handleSubmit}>
         <Grid container direction='column' justifyContent='center' alignItems='center'>
           <Grid item>Patient Form</Grid>
-          <Grid item container direction='column'>
+          <Grid item container direction='column' justifyContent='space-evenly' alignItems='center'>
             <Grid item>
               <TextField
                 fullWidth
                 id="name"
                 name="name"
+                style={{ width: "50ch" }}
                 label="name"
                 value={formik.values.name}
                 onChange={formik.handleChange}
@@ -75,6 +100,7 @@ const PatientForm = () => {
                 minRows={3}
                 multiline
                 fullWidth
+                style={{ width: "50ch" }}
                 id="address"
                 name="address"
                 label="address"
@@ -97,7 +123,7 @@ const PatientForm = () => {
                   helperText={formik.touched.age && formik.errors.age}
                 />
               </Grid>
-              <Grid item>
+              {/* <Grid item>
                 <TextField
                   fullWidth
                   id="gender"
@@ -108,7 +134,7 @@ const PatientForm = () => {
                   error={formik.touched.gender && Boolean(formik.errors.gender)}
                   helperText={formik.touched.gender && formik.errors.gender}
                 />
-              </Grid>
+              </Grid> */}
               <Grid item p={2}>
                 <TextField
                   id="gender"
@@ -116,17 +142,17 @@ const PatientForm = () => {
                   name="gender"
                   select
                   label="Gender"
-                  style={{ paddingLeft: "18px", paddingRight: "18px" }}
+                  // style={{ paddingLeft: "18px", paddingRight: "18px" }}
                   value={formik.values.gender}
                   onChange={formik.handleChange}
                   helperText={formik.touched.gender && formik.errors.gender}
                   error={formik.touched.gender && Boolean(formik.errors.gender)}
                 >
                   <MenuItem value="male">
-                    Male
+                    male
                   </MenuItem>
                   <MenuItem value="female">
-                    Female
+                    female
                   </MenuItem>
                 </TextField>
               </Grid>
@@ -173,14 +199,15 @@ const PatientForm = () => {
           <Grid item container justifyContent='center' alignItems='center'>
             <Grid item>
               <Box mt={5}>
-                <Button color="primary" variant="contained" fullWidth type="submit">
+                <Button color="primary" variant="contained" fullWidth
+                  type="submit"
+                >
                   Add Appointment
                 </Button>
               </Box>
             </Grid>
           </Grid>
         </Grid>
-
       </form>
     </Box>
   );

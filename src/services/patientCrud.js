@@ -28,9 +28,10 @@ class PatientCrud {
     const sql = "DROP TABLE people"
     return this.dao.run(sql);
   }
-  insertData({ Pid, UId, Tid, Name, Address, Age, gender, CurrentTemp, CurrentBp, CurrentOxygen, dateOfAppoint, dateOfBooking }) {
-    console.log("insert.....Data ...", { Pid, UId, Tid, Name, Address, Age, gender, CurrentTemp, CurrentBp, CurrentOxygen, dateOfAppoint, dateOfBooking })
-    return this.dao.run("INSERT INTO Patient values(?,?,?,?,?,?,?,?,?,?,?,?)", [Pid, UId, Tid, Name, Address, Age, gender, CurrentTemp, CurrentBp, CurrentOxygen, dateOfAppoint, dateOfBooking])
+  insertData(patient) {
+    console.log("insert.....Data ...", patient)
+    return this.dao.run("INSERT INTO Patient values(?,?,?,?,?,?,?,?,?,?,?,?)",
+      [patient.PId, patient.UId, patient.Tid, patient.name, patient.address, patient.age, patient.gender, patient.currentTemp, patient.currentBp, patient.currentOxygen, patient.dateOfAppoint, patient.dateOfBooking])
   }
   getAllPatients() {
     console.log("getting all  Patient ...")
