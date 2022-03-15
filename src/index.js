@@ -16,13 +16,11 @@ configureFakeBackend();
 
 
 ReactDOM.render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <HashRouter history={history}>
-                <App />
-            </HashRouter>
-        </Provider>
-    </React.StrictMode>,
+    <Provider store={store}>
+        <HashRouter history={history}>
+            <App />
+        </HashRouter>
+    </Provider>,
     document.getElementById('root')
 );
 
