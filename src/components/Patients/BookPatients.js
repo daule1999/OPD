@@ -3,7 +3,11 @@ import React, { useEffect, useState } from 'react'
 import { printData } from "../../message-control/renderer"
 import PatientForm from './PatientForm';
 import PrinterComp from './PrinterComp';
-
+import {
+  useDispatch,
+  useSelector
+} from "react-redux";
+import { patientActions } from "../../actions/patients"
 // import Promise from "bluebird";
 const AppDAO = require('../../services/appDao').default
 const PatientCrud = require('../../services/patientCrud').default
@@ -122,13 +126,29 @@ function BookPatients() {
   const setPrint = (data) => {
     printData(data)
   }
+  const dispatch = useDispatch()
+  const loading = useSelector((state) => state.patients.loading)
+  const finalDatas = useSelector((state) => state.patients.finalDatas)
+  const patient = useSelector((state) => state.patients.patient)
+  const getPatientData = async (currId) => {
+    console.log("in getPatientData id= ", currId)
+    const res = await dispatch(patientActions.getById(currId))
+    console.log("in printer ", res)
+    // setpatient(res)
+  }
+  useEffect(() => {
+    console.log("in useEffect ", finalDatas)
+  }, [currId])
+  console.log(`finalDatas`, finalDatas)
+  if (loading) {
+    return <div>Loading...</div>
+  }
   return (
     <div>
-      Book Patients
       {/* <button onClick={clickHandler}>Add Data</button>
       <button onClick={createHandler}>createTable</button> */}
       {showForm && <PatientForm closeForm={closeForm} setId={setId} />}
-      {!showForm && <PrinterComp id={currId} setPrint={setPrint}></PrinterComp>}
+      {!showForm && <PrinterComp id={currId} setPrint={setPrint} patient={patient} finalData={finalDatas}></PrinterComp>}
     </div>
   )
 }

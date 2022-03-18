@@ -2,27 +2,34 @@ import { Box } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import {
   useDispatch,
-  // useSelector
+  useSelector
 } from "react-redux";
 import { patientActions } from "../../actions/patients"
-
+import Switch from '@mui/material/Switch';
+import { FunctionalComponentWithFunctionalComponentToPrint } from "./REacttoPrinter"
 import PatientData from './PatientData'
-function PrinterComp({ id, setPrint }) {
-  const dispatch = useDispatch()
-  const [patient, setpatient] = useState({})
+function PrinterComp({ id, setPrint, finalData, patient }) {
+  const [checked, setChecked] = useState(false);
 
-  const getPatientData = async () => {
-    const res = await dispatch(patientActions.getById(id))
-    console.log("in printer ", res)
-    setpatient(res)
-  }
-  useEffect(() => {
-    getPatientData()
-  }, [])
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
+  // useEffect(() => {
+  //   console.log("here")
+  //   getPatientData()
+  // })
   return (
     <div>{patient &&
       <Box width="50%" mx="auto">
-        <PatientData patient={patient} setPrint={setPrint} />
+        <Switch
+          checked={checked}
+          onChange={handleChange}
+          inputProps={{ 'aria-label': 'controlled' }}
+        />
+        {checked ?
+          <PatientData patient={patient} setPrint={setPrint} finalData={finalData} />
+          : <FunctionalComponentWithFunctionalComponentToPrint />
+        }
       </Box>}
 
     </div>

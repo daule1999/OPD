@@ -16,7 +16,8 @@ const data = [{ type: 'text', value: 'This is sample thermal print' }, {
     style: 'margin: 10 20px 20 20px'
 }, {
     type: 'table',
-    style: 'border: 1px solid #ddd',             // style the table
+    style: 'border: 1px solid #ddd',
+    value: 'table',           // style the table
     // list of the columns to be rendered in the table header
     tableHeader: [{ type: 'text', value: 'Animal' }, { type: 'image', path: path.join(__dirname, 'icons/animal.png') }],
     // multi dimensional array depicting the rows and columns of the table body

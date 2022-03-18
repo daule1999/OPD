@@ -31,6 +31,7 @@ async function addPatient(patient) {
 async function getPatient(id) {
   const db = setDatabase();
   try {
+    console.log("in service patient = ", id)
     const res = await db.getPatientsById(id)
     console.log("in service patient = ", res)
     return { ...res };
