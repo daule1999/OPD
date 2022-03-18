@@ -1,4 +1,4 @@
-import { Box } from '@material-ui/core';
+import { Box, Button, Grid } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import {
   useDispatch,
@@ -8,7 +8,7 @@ import { patientActions } from "../../actions/patients"
 import Switch from '@mui/material/Switch';
 import { FunctionalComponentWithFunctionalComponentToPrint } from "./REacttoPrinter"
 import PatientData from './PatientData'
-function PrinterComp({ id, setPrint, finalData, patient }) {
+function PrinterComp({ id, setPrint, finalData, patient, addNewPatient }) {
   const [checked, setChecked] = useState(false);
 
   const handleChange = (event) => {
@@ -21,14 +21,25 @@ function PrinterComp({ id, setPrint, finalData, patient }) {
   return (
     <div>{patient &&
       <Box width="50%" mx="auto">
-        <Switch
-          checked={checked}
-          onChange={handleChange}
-          inputProps={{ 'aria-label': 'controlled' }}
-        />
+        <Grid container justifyContent="space-evenly">
+          <Grid item>
+            <Switch
+              checked={checked}
+              onChange={handleChange}
+              inputProps={{ 'aria-label': 'controlled' }}
+            />
+          </Grid>
+          <Grid item>
+            <Button variant="outlined" color="primary" onClick={addNewPatient}>
+              Book New Patient
+            </Button>
+          </Grid>
+        </Grid>
+
+
         {checked ?
           <PatientData patient={patient} setPrint={setPrint} finalData={finalData} />
-          : <FunctionalComponentWithFunctionalComponentToPrint />
+          : <FunctionalComponentWithFunctionalComponentToPrint addNewPatient={addNewPatient} />
         }
       </Box>}
 

@@ -7,7 +7,8 @@ import {
 import { FunctionalComponentToPrint } from "./CompToPrint";
 import { patientActions } from "../../actions/patients"
 import { Promise } from 'bluebird'
-export const FunctionalComponentWithFunctionalComponentToPrint = () => {
+import { history } from "../../helpers/history"
+export const FunctionalComponentWithFunctionalComponentToPrint = ({ addNewPatient }) => {
 
   const dispatch = useDispatch()
   const componentRef = React.useRef(null);
@@ -29,6 +30,8 @@ export const FunctionalComponentWithFunctionalComponentToPrint = () => {
 
   const handleAfterPrint = React.useCallback(() => {
     console.log("`onAfterPrint` called");
+    console.log(`history`, history)
+    addNewPatient()
   }, []);
 
   const handleBeforePrint = React.useCallback(() => {

@@ -143,12 +143,16 @@ function BookPatients() {
   if (loading) {
     return <div>Loading...</div>
   }
+  const addNewPatient = () => {
+    setshowForm(true)
+    setcurrId(null)
+  }
   return (
     <div>
       {/* <button onClick={clickHandler}>Add Data</button>
       <button onClick={createHandler}>createTable</button> */}
-      {showForm && <PatientForm closeForm={closeForm} setId={setId} />}
-      {!showForm && <PrinterComp id={currId} setPrint={setPrint} patient={patient} finalData={finalDatas}></PrinterComp>}
+      {showForm && <PatientForm closeForm={closeForm} setId={setId} addNewPatient={addNewPatient} />}
+      {!showForm && <PrinterComp id={currId} setPrint={setPrint} addNewPatient={addNewPatient} patient={patient} finalData={finalDatas}></PrinterComp>}
     </div>
   )
 }

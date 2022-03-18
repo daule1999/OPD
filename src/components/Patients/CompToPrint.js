@@ -38,7 +38,7 @@ export class CompToPrint extends Component {
     }
     return (
       <div>
-        {finalDatas.map((obj) => {
+        {finalDatas && finalDatas.map((obj) => {
           return <div key={obj.value} >
             {
               obj.type === 'text' && <Box key={obj.value}>
