@@ -27,14 +27,14 @@ import {
 import React from "react";
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import { alertActions } from "../../actions/alert";
+// import { alertActions } from "../../actions/alert";
 import { makeStyles } from "@material-ui/core/styles";
 import { useEffect } from "react";
 // import { useEffect } from 'react';
 import { useFormik } from "formik";
 // import { useHistory } from "react-router-dom";
 import { useState } from "react";
-import { userActions } from "../../actions/user";
+import { actions } from "../../actions/actions";
 
 ///store/actions/user.js
 function Alertt(props) {
@@ -65,8 +65,8 @@ function LogIn(props) {
   const dispatch = useDispatch();
   // let history = useHistory();
   const location = useLocation();
-  const isLoggedIn = useSelector((state) => state.authentication.loggingIn);
-  const alert = useSelector((state) => state.alert);
+  const isLoggedIn = useSelector((state) => state.reducers.loggingIn);
+  const alert = useSelector((state) => state.reducers.alert);
   const [messge, setmsg] = useState("");
   const [showpass, setShowPass] = useState(false);
   const handleClickShowPassword = () => {
@@ -103,9 +103,9 @@ function LogIn(props) {
 
     setOpen(false);
   };
-  useEffect(() => {
-    dispatch(alertActions.clear())
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(alertActions.clear())
+  // }, [dispatch]);
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -125,7 +125,7 @@ function LogIn(props) {
       console.log(JSON.stringify(values));
       // dispatch(setUser(values))
       const { from } = location.state || { from: { pathname: "/" } };
-      dispatch(userActions.login(values.username, values.password, from));
+      dispatch(actions.login(values.username, values.password, from));
       // history.push("/");
     },
   });

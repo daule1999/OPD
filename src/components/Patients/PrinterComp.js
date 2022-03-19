@@ -1,10 +1,12 @@
 import { Box, Button, Grid } from '@material-ui/core';
-import React, { useEffect, useState } from 'react'
-import {
-  useDispatch,
-  useSelector
-} from "react-redux";
-import { patientActions } from "../../actions/patients"
+import React, {
+  // useEffect,
+  useState
+} from 'react'
+// import {
+//   useDispatch,
+//   useSelector
+// } from "react-redux";
 import Switch from '@mui/material/Switch';
 import { FunctionalComponentWithFunctionalComponentToPrint } from "./REacttoPrinter"
 import PatientData from './PatientData'
@@ -39,7 +41,7 @@ function PrinterComp({ id, setPrint, finalData, patient, addNewPatient }) {
 
         {checked ?
           <PatientData patient={patient} setPrint={setPrint} finalData={finalData} />
-          : <FunctionalComponentWithFunctionalComponentToPrint addNewPatient={addNewPatient} />
+          : <FunctionalComponentWithFunctionalComponentToPrint addNewPatient={addNewPatient} id={patient.Uid} />
         }
       </Box>}
 

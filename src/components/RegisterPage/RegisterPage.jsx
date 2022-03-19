@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { userActions } from '../../actions/user';
+import { actions } from '../../actions/actions';
 
 
 class RegisterPage extends React.Component {
@@ -94,12 +94,12 @@ class RegisterPage extends React.Component {
 }
 
 function mapState(state) {
-  const { registering } = state.registration;
+  const { registering } = state.reducers;
   return { registering };
 }
 
 const actionCreators = {
-  register: userActions.register
+  register: actions.register
 }
 
 const connectedRegisterPage = connect(mapState, actionCreators)(RegisterPage);

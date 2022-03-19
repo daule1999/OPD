@@ -6,7 +6,6 @@ import {
 // import { connect } from 'react-redux';
 
 // import { history } from './helpers/history';
-// import { alertActions } from './actions/alert.actions';
 // import { PrivateRoute } from './components/PrivateRoute';
 import HomePage from './components/HomePage/HomePage';
 // import { LoginPage } from './components/LogInPage/LoginPage';

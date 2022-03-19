@@ -5,9 +5,10 @@ import {
 } from "react-redux";
 // import TodoList from '../../Sqlite3/TodoList';
 function HomePage() {
-  const isLoggeIn = useSelector((state) => state.authentication.loggedIn);
-  const user = useSelector((state) => state.user);
-  const isAuthAllowed = useSelector((state) => state.authentication.isAuthAllowed);
+  const isLoggeIn = useSelector((state) => state.reducers.loggedIn);
+  const user = useSelector((state) => state.reducers.user);
+  const isAuthAllowed = useSelector((state) => state.reducers.isAuthAllowed);
+
   return (
     <div>
       {isLoggeIn && <div>Logged in as <pre>{user}</pre></div>}

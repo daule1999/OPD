@@ -149,7 +149,7 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 
 import MenuIcon from "@material-ui/icons/Menu";
-import { userActions } from "../../actions/user"
+import { actions } from "../../actions/actions"
 
 // import { useHistory } from "react-router-dom";
 
@@ -202,9 +202,9 @@ function NavBar(props) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const isLoggeIn = useSelector((state) => state.authentication.loggedIn);
-  const iaAuthAllowed = useSelector((state) => state.authentication.iaAuthAllowed);
+  const user = useSelector((state) => state.reducers.user);
+  const isLoggeIn = useSelector((state) => state.reducers.loggedIn);
+  const iaAuthAllowed = useSelector((state) => state.reducers.iaAuthAllowed);
   console.log(user, isLoggeIn);
   const [authAllowed, setauthAllowed] = useState(iaAuthAllowed)
   useEffect(() => {
@@ -308,7 +308,7 @@ function NavBar(props) {
                       <MenuItem
                         // variant="h6"
                         // className={classes.logOut}
-                        onClick={() => dispatch(userActions.logout())}
+                        onClick={() => dispatch(actions.logout())}
                       >
                         LogOut
                       </MenuItem>
@@ -354,7 +354,7 @@ function NavBar(props) {
                       <MenuItem
                         // variant="h6"
                         // className={classes.logOut}
-                        onClick={() => dispatch(userActions.logout())}
+                        onClick={() => dispatch(actions.logout())}
                       >
                         LogOut
                       </MenuItem>
@@ -387,7 +387,7 @@ function NavBar(props) {
                 <Typography
                   variant="h6"
                   className={classes.logOut}
-                  onClick={() => dispatch(userActions.logout())}
+                  onClick={() => dispatch(actions.logout())}
                 >
                   LogOut
                 </Typography>

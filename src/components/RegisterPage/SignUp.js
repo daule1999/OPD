@@ -21,11 +21,11 @@ import { useDispatch, useSelector } from "react-redux";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import MuiAlert from "@material-ui/lab/Alert";
 import { NavLink } from "react-router-dom"
-import { alertActions } from "../../actions/alert";
+// import { alertActions } from "../../actions/alert";
 import { makeStyles } from "@material-ui/core/styles";
 import { useFormik } from "formik";
 import { useHistory } from "react-router-dom";
-import { userActions } from "../../actions/user"
+import { actions } from "../../actions/actions"
 
 const phoneRegExp = /^[6789]\d{9}$/
 function Copyright() {
@@ -68,7 +68,7 @@ function SignUp() {
   const classes = useStyles();
   const dispatch = useDispatch();
   let history = useHistory();
-  const alert = useSelector((state) => state.alert);
+  const alert = useSelector((state) => state.reducers.alert);
   const [messge, setmsg] = useState("");
   // const [showpass,setShowPass]=useState(false);
   // const handleClickShowPassword = () => {
@@ -105,9 +105,9 @@ function SignUp() {
 
     setOpen(false);
   };
-  useEffect(() => {
-    dispatch(alertActions.clear())
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(actions.clear())
+  // }, [dispatch]);
   const formik = useFormik({
     initialValues: {
       fullName: '',
@@ -162,7 +162,7 @@ function SignUp() {
         mobile: values.mobile
       }
       console.log(JSON.stringify(newUser));
-      dispatch(userActions.register(newUser))
+      dispatch(actions.register(newUser))
       history.push("/");
     },
   });
@@ -306,7 +306,7 @@ function SignUp() {
           >
             Sign Up
           </Button>
-          <Grid container justify="flex-end">
+          <Grid container justifyContent="flex-end">
             <Grid item>
               <NavLink to="/LogIn">
                 Already have an account? Sign in

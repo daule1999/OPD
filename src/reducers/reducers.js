@@ -1,4 +1,11 @@
 import {
+  SUCCESS_ALERT,
+  ERROR_ALERT,
+  CLEAR_ALERT,
+  LOGIN_FAILURE,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGOUT,
   ADD_PATIENT_REQUEST,
   ADD_PATIENT_SUCCESS,
   ADD_PATIENT_FAILURE,
@@ -13,71 +20,88 @@ import {
   GET_PATIENTS_BYID_FAILURE,
   GET_PATIENTS_PRINT_REQUEST,
   GET_PATIENTS_PRINT_SUCCESS,
-  GET_PATIENTS_PRINT_FAILURE
+  GET_PATIENTS_PRINT_FAILURE,
+  REGISTER_FAILURE,
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS,
+  GET_PRINT_REQUEST,
+  GET_PRINT_FAILURE,
+  GET_PRINT_SUCCESS
 } from "../actionConstants/actionConstants"
-const initState = {
-  patient: "hii", finalDatas: [
-    {
-      type: 'text',
-      value: 'ANGELINA LIFE CARE HOSPITAL',
-      style: `text-align:center;`,
-      css: { "font-weight": "700", "font-size": "18px" }
-    }, {
-      type: 'text',
-      value: 'Mofassil Mod, Khizarsarai Road',
-      style: `text-align:center;`,
-      css: { "font-weight": "500", "font-size": "14px" }
-    }, {
-      type: 'text',
-      value: 'In front of vishal Petrol Pump',
-      style: `text-align:center;`,
-      css: { "font-weight": "500", "font-size": "14px" }
-    }, {
-      type: 'text',
-      value: 'Mob no - 9472643340',
-      style: `text-align:center;`,
-      css: { "font-weight": "500", "font-size": "16px" }
-    }, {
-      type: 'text',
-      value: 'OPD Slip',
-      style: `text-align:center;`,
-      css: { "font-weight": "600", "font-size": "16px" }
-    }, , {
-      type: 'table',
-      style: 'border: 1px solid #ddd',
-      value: 'table',
-      tableBody: [
-        [{ type: 'text', value: "Doctor Name" }, { type: 'text', value: "Dr. Angelina" }],
-        [{ type: 'text', value: "Patient Name" }, { type: 'text', value: "Hello" }],
-        [{ type: 'text', value: `Uid :  ` }, { type: 'text', valu: ` Uid : ` }],
-        [{ type: 'text', value: "Address" }, { type: 'text', value: "Gaya" }],
-        [{ type: 'text', value: "Age" }, { type: 'text', value: "26" }],
-        [{ type: 'text', value: "Gender" }, { type: 'text', value: "male" }],
-        [{ type: 'text', value: "Temp." }, { type: 'text', value: "98" }],
-        [{ type: 'text', value: "BP" }, { type: 'text', value: "70/80" }],
-        [{ type: 'text', value: "Oxygen" }, { type: 'text', value: "90" }],
-        [{
-          type: 'text', value: `dateOfAppoint : `
-        }, {
-          type: 'text', value: `dateOfBooking :`
-        }],
-        [{ type: 'text', value: "Fee" }, { type: 'text', value: "200 Rs" }],
-      ],
-      tableHeaderStyle: 'background-color: #000; color: white;',
-      tableBodyStyle: 'border: 0.5px solid #ddd',
-      tableFooterStyle: 'background-color: #000; color: white;',
-    }
-  ]
-}
-export function patients(state = initState, action) {
-  console.log(action)
+import { initState } from "./AppState"
+
+export function reducers(state = initState, action) {
   switch (action.type) {
+    case SUCCESS_ALERT:
+      return {
+        ...state,
+        alert: {
+          type: "success",
+          message: action.message,
+        },
+        loading: false
+      };
+    case ERROR_ALERT:
+      return {
+        ...state,
+        alert: {
+          type: "error",
+          message: action.message
+        },
+        loading: false
+      };
+    case CLEAR_ALERT:
+      return {
+        ...state,
+        alert: {
+          type: "info"
+        },
+        loading: false
+      };
+    case LOGIN_REQUEST:
+      return {
+        ...state,
+        loggingIn: true,
+        user: action.user,
+        loading: true
+      };
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        loggedIn: true,
+        user: action.user,
+        loading: false
+      }
+
+    case LOGIN_FAILURE:
+      return {
+        ...state,
+        user: {
+          username: "Bhola",
+          password: "123456789",
+        },
+        loggedIn: false,
+        loading: false
+
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        user: {
+          username: "Bhola",
+          password: "123456789",
+        },
+        loggedIn: false,
+        loading: false
+
+      };
     case ADD_PATIENT_REQUEST:
     case DELETE_PATIENT_REQUEST:
     case GETALL_PATIENT_REQUEST:
     case GET_PATIENTS_BYID_REQUEST:
     case GET_PATIENTS_PRINT_REQUEST:
       return {
+        ...state,
         loading: true
       };
     case ADD_PATIENT_SUCCESS:
@@ -111,7 +135,7 @@ export function patients(state = initState, action) {
             value: 'OPD Slip',
             style: `text-align:center;`,
             css: { "font-weight": "600", "font-size": "16px" }
-          }, , {
+          }, {
             type: 'table',
             style: 'border: 1px solid #ddd',
             value: 'table',
@@ -168,10 +192,53 @@ export function patients(state = initState, action) {
     case GET_PATIENTS_BYID_FAILURE:
     case GET_PATIENTS_PRINT_FAILURE:
       return {
+        ...state,
         error: action.error,
         loading: false
       };
+    case REGISTER_REQUEST:
+      return {
+        ...state,
+        registering: true,
+        loading: true
+      };
+    case REGISTER_SUCCESS:
+      return {
+        ...state,
+        registering: false,
+        loading: false
+      };
+    case REGISTER_FAILURE:
+      return {
+        ...state,
+        registering: false,
+        loading: false
+      };
+    case GET_PRINT_REQUEST:
+      return {
+        ...state,
+        loading: true
+      }
+    case GET_PRINT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+        notPrinted: [
+          ...state.notPrinted,
+          action.id
+        ]
+      }
+    case GET_PRINT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        printed: [
+          // ...state.printed,
+          action.id
+        ]
+      }
     default:
-      return state
+      return state;
   }
 }

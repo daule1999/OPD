@@ -10,7 +10,7 @@ import {
   useDispatch,
   // useSelector
 } from "react-redux";
-import { patientActions } from "../../actions/patients"
+import { actions } from "../../actions/actions"
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
@@ -66,7 +66,7 @@ const PatientForm = ({ closeForm, setId }) => {
     onSubmit: async (values) => {
       // alert(JSON.stringify(values, null, 2));
       console.log(values, " in forms")
-      const res = await dispatch(patientActions.add(values))
+      const res = await dispatch(actions.add(values))
       console.log("added ", res)
       if (res) {
         setId(res.PID)

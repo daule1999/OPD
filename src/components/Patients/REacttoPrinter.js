@@ -5,10 +5,12 @@ import {
   useDispatch
 } from 'react-redux'
 import { FunctionalComponentToPrint } from "./CompToPrint";
-import { patientActions } from "../../actions/patients"
 import { Promise } from 'bluebird'
 import { history } from "../../helpers/history"
-export const FunctionalComponentWithFunctionalComponentToPrint = ({ addNewPatient }) => {
+import { actions } from "../../actions/actions"
+import { Button } from "@material-ui/core"
+import Loading from '../Loading'
+export const FunctionalComponentWithFunctionalComponentToPrint = ({ addNewPatient, id }) => {
 
   const dispatch = useDispatch()
   const componentRef = React.useRef(null);
@@ -19,24 +21,27 @@ export const FunctionalComponentWithFunctionalComponentToPrint = ({ addNewPatien
   const [text, setText] = React.useState("old boring text");
   // const [finalDatas, setFinalDatas] = React.useState([])
 
-  const patient = useSelector((state) => state.patients.patient)
-  const finalDatas = useSelector((state) => state.patients.finalDatas)
+  // const patient = useSelector((state) => state.reducers.patient)
+  const finalDatas = useSelector((state) => state.reducers.finalDatas)
+  const rloading = useSelector((state) => state.reducers.loading)
   // React.useEffect(() => {
   //   const pat = getCurentPatient()
-  //   const data = dispatch(patientActions.getPrintData(pat))
+  //   const data = dispatch(actions.getPrintData(pat))
   //   console.log(data)
   //   setFinalDatas(data)
   // }, [])
 
   const handleAfterPrint = React.useCallback(() => {
     console.log("`onAfterPrint` called");
+    dispatch(actions.getPrintDone(id))
     console.log(`history`, history)
     addNewPatient()
-  }, []);
+  }, [addNewPatient, dispatch, id]);
 
   const handleBeforePrint = React.useCallback(() => {
     console.log("`onBeforePrint` called");
-  }, []);
+    dispatch(actions.getPrintStart(id))
+  }, [dispatch, id]);
 
   const handleOnBeforeGetContent = React.useCallback(() => {
     console.log("`onBeforeGetContent` called");
@@ -61,11 +66,11 @@ export const FunctionalComponentWithFunctionalComponentToPrint = ({ addNewPatien
     ) {
       onBeforeGetContentResolve.current();
     }
-  }, [onBeforeGetContentResolve.current, text]);
+  }, [text]);
 
   const reactToPrintContent = React.useCallback(() => {
     return componentRef.current;
-  }, [componentRef.current]);
+  }, []);
 
   const reactToPrintTrigger = React.useCallback(() => {
     // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
@@ -82,6 +87,10 @@ export const FunctionalComponentWithFunctionalComponentToPrint = ({ addNewPatien
     ); // eslint-disable-line max-len
   }, []);
 
+  if (rloading) {
+    return (<div><Loading />
+    </div>)
+  }
   return (
     <div>
       <ReactToPrint

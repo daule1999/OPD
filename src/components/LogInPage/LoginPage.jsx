@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router";
-import { userActions } from '../../actions/user';
+import { actions } from '../../actions/actions';
 
 
 class LoginPage extends React.Component {
@@ -73,13 +73,13 @@ class LoginPage extends React.Component {
 }
 
 function mapState(state) {
-  const { loggingIn } = state.authentication;
+  const { loggingIn } = state.reducers;
   return { loggingIn };
 }
 
 const actionCreators = {
-  login: userActions.login,
-  logout: userActions.logout
+  login: actions.login,
+  logout: actions.logout
 };
 
 const connectedLoginPage = connect(mapState, actionCreators)(withRouter(LoginPage));

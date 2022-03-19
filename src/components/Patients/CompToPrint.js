@@ -4,11 +4,9 @@ import "./example.css"
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import Loading from "../Loading";
 
 export class CompToPrint extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   canvasEl;
 
@@ -32,9 +30,9 @@ export class CompToPrint extends Component {
   render() {
     const { finalDatas, loading } = this.props;
     console.log(finalDatas, "in reactTo print ")
-    console.log(`obj.type.tableBody`, finalDatas[6].tableBody)
+    console.log(`obj.type.tableBody`, finalDatas[5].tableBody)
     if (loading) {
-      return <div>Loading...</div>
+      return <div><Loading /></div>
     }
     return (
       <div>
@@ -72,7 +70,7 @@ export class CompToPrint extends Component {
 
 
 const mapStateToProps = (state) => ({
-  loading: state.patients.loading
+  loading: state.reducers.loading
 })
 
 const mapDispatchToProps = {

@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react'
 import { printData } from "../../message-control/renderer"
 import PatientForm from './PatientForm';
 import PrinterComp from './PrinterComp';
+import Loading from '../Loading'
 import {
-  useDispatch,
+  // useDispatch,
   useSelector
 } from "react-redux";
-import { patientActions } from "../../actions/patients"
+// import { actions } from "../../actions/actions"
 // import Promise from "bluebird";
 const AppDAO = require('../../services/appDao').default
 const PatientCrud = require('../../services/patientCrud').default
@@ -126,22 +127,22 @@ function BookPatients() {
   const setPrint = (data) => {
     printData(data)
   }
-  const dispatch = useDispatch()
-  const loading = useSelector((state) => state.patients.loading)
-  const finalDatas = useSelector((state) => state.patients.finalDatas)
-  const patient = useSelector((state) => state.patients.patient)
-  const getPatientData = async (currId) => {
-    console.log("in getPatientData id= ", currId)
-    const res = await dispatch(patientActions.getById(currId))
-    console.log("in printer ", res)
-    // setpatient(res)
-  }
+  // const dispatch = useDispatch()
+  const loading = useSelector((state) => state.reducers.loading)
+  const finalDatas = useSelector((state) => state.reducers.finalDatas)
+  const patient = useSelector((state) => state.reducers.patient)
+  // const getPatientData = async (currId) => {
+  //   console.log("in getPatientData id= ", currId)
+  //   const res = await dispatch(actions.getById(currId))
+  //   console.log("in printer ", res)
+  //   // setpatient(res)
+  // }
   useEffect(() => {
     console.log("in useEffect ", finalDatas)
-  }, [currId])
+  }, [currId, finalDatas])
   console.log(`finalDatas`, finalDatas)
   if (loading) {
-    return <div>Loading...</div>
+    return <div><Loading /></div>
   }
   const addNewPatient = () => {
     setshowForm(true)
