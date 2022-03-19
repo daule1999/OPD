@@ -32,7 +32,13 @@ import {
   // DELETE_PATIENT_SUCCESS,
   GET_PRINT_REQUEST,
   GET_PRINT_FAILURE,
-  GET_PRINT_SUCCESS
+  GET_PRINT_SUCCESS,
+  SET_OPD_REQUEST,
+  SET_OPD_SUCCESS,
+  SET_OPD_FAILURE,
+  GETALL_PATIENT_REQUEST,
+  GETALL_PATIENT_SUCCESS,
+  GETALL_PATIENT_FAILURE
 } from "../actionConstants/actionConstants"
 
 import { services } from "../services/services";
@@ -288,14 +294,14 @@ function getPrintData(patient) {
     style: 'border: 1px solid #ddd',
     tableBody: [
       [{ type: 'text', value: "Doctor Name" }, { type: 'text', value: "Dr. Angelina" }],
-      [{ type: 'text', value: "Patient Name" }, { type: 'text', value: patient.Name }],
+      [{ type: 'text', value: "Patient Name" }, { type: 'text', value: patient.name }],
       [{ type: 'text', value: `Uid :  ${patient.UId}` }, { type: 'text', valu: ` Uid : patient.Tid` }],
-      [{ type: 'text', value: "Address" }, { type: 'text', value: patient.Address }],
-      [{ type: 'text', value: "Age" }, { type: 'text', value: patient.Age }],
-      [{ type: 'text', value: "Gender" }, { type: 'text', value: patient.sex }],
-      [{ type: 'text', value: "Temp." }, { type: 'text', value: patient.CurrentTemp }],
-      [{ type: 'text', value: "BP" }, { type: 'text', value: patient.CurrentBp }],
-      [{ type: 'text', value: "Oxygen" }, { type: 'text', value: patient.CurrentOxygen }],
+      [{ type: 'text', value: "Address" }, { type: 'text', value: patient.address }],
+      [{ type: 'text', value: "Age" }, { type: 'text', value: patient.age }],
+      [{ type: 'text', value: "Gender" }, { type: 'text', value: patient.gender }],
+      [{ type: 'text', value: "Temp." }, { type: 'text', value: patient.currentTemp }],
+      [{ type: 'text', value: "BP" }, { type: 'text', value: patient.currentBp }],
+      [{ type: 'text', value: "Oxygen" }, { type: 'text', value: patient.currentOxygen }],
       [{
         type: 'text', value: `dateOfAppoint :  ${patient.dateOfAppoint}`
       }, {
@@ -333,16 +339,28 @@ function getPrintData(patient) {
   }
 }
 function getAllPatients() {
+  return async (dispatch, getState) => {
+    dispatch(request());
+    try {
+      const res = await services.getAllPatients()
+      console.log(res, " in actions")
+      dispatch(success(res))
+      return res
 
-  // function request(user) {
-  //   return { type: GETALL_PATIENT_REQUEST, user };
-  // }
-  // function success(user) {
-  //   return { type: GETALL_PATIENT_SUCCESS, user };
-  // }
-  // function failure(error) {
-  //   return { type: GETALL_PATIENT_FAILURE, error };
-  // }
+    } catch (error) {
+      dispatch(failure(error.toString()));
+    }
+  }
+
+  function request() {
+    return { type: GETALL_PATIENT_REQUEST };
+  }
+  function success(allPatients) {
+    return { type: GETALL_PATIENT_SUCCESS, allPatients };
+  }
+  function failure(error) {
+    return { type: GETALL_PATIENT_FAILURE, error };
+  }
 }
 function getPrintStart(id) {
   return (dispatch, getState) => {
@@ -372,6 +390,31 @@ function getPrintFail(err) {
 
 }
 
+function setOPD(opd) {
+  return async (dispatch, getState) => {
+    dispatch(request(opd))
+    try {
+      console.group("before actions ", opd)
+      const res = await services.setOPD(opd)
+      console.log(res, " after actions")
+      dispatch(success(opd))
+      return res
+
+    } catch (error) {
+      dispatch(failure(error.toString()));
+    }
+  }
+
+  function request(opd) {
+    return { type: SET_OPD_REQUEST, opd };
+  }
+  function success(opd) {
+    return { type: SET_OPD_SUCCESS, opd };
+  }
+  function failure(error) {
+    return { type: SET_OPD_FAILURE, error };
+  }
+}
 
 export const actions = {
   login,
@@ -389,5 +432,6 @@ export const actions = {
   getAllPatients,
   getPrintStart,
   getPrintDone,
-  getPrintFail
+  getPrintFail,
+  setOPD
 };

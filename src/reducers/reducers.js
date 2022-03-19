@@ -31,6 +31,7 @@ import {
 import { initState } from "./AppState"
 
 export function reducers(state = initState, action) {
+  console.log(state, "in reducer state")
   switch (action.type) {
     case SUCCESS_ALERT:
       return {
@@ -109,6 +110,10 @@ export function reducers(state = initState, action) {
         ...state,
         patient: action.patient,
         loading: false,
+        TodayPatients: [
+          ...state.TodayPatients,
+          action.patient
+        ],
         finalDatas: [
           {
             type: 'text',
@@ -171,7 +176,10 @@ export function reducers(state = initState, action) {
     case GETALL_PATIENT_SUCCESS:
       return {
         ...state,
-        // ...action,
+        TodayPatients: [
+          ...state.TodayPatients,
+          ...action.allPatients
+        ],
         loading: false
       };
     case GET_PATIENTS_BYID_SUCCESS:

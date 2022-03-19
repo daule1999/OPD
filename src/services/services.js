@@ -10,7 +10,9 @@ export const services = {
   update,
   delete: _delete,
   addPatient,
-  getPatient
+  getPatient,
+  setOPD,
+  getAllPatients
 };
 
 
@@ -47,6 +49,17 @@ async function getPatient(id) {
     const res = await db.getPatientsById(id)
     console.log("in service patient = ", res)
     return { ...res };
+  } catch (err) {
+    console.log("in service ", err)
+  }
+}
+async function getAllPatients() {
+  const db = setDatabase();
+  try {
+    console.log("in service getAllPatients = ")
+    const res = await db.getAllPatients()
+    console.log("in service getAllPatients = ", res)
+    return res;
   } catch (err) {
     console.log("in service ", err)
   }
@@ -190,4 +203,22 @@ function handleResponse(response) {
 
     return data;
   });
+}
+
+async function setOPD(opd) {
+  const db = setDatabase();
+  try {
+    console.log("before service ", opd)
+    const cres = await db.createOPDTable()
+    if (cres) {
+      const res = await db.insertOPDData(opd)
+      console.log("in service patient = ", res)
+      return res;
+    } else {
+      console.log("in service error")
+      return
+    }
+  } catch (err) {
+    console.log("in service ", err)
+  }
 }

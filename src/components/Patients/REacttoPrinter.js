@@ -8,7 +8,7 @@ import { FunctionalComponentToPrint } from "./CompToPrint";
 import { Promise } from 'bluebird'
 import { history } from "../../helpers/history"
 import { actions } from "../../actions/actions"
-import { Button } from "@material-ui/core"
+// import { Button } from "@material-ui/core"
 import Loading from '../Loading'
 export const FunctionalComponentWithFunctionalComponentToPrint = ({ addNewPatient, id }) => {
 
