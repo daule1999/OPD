@@ -6,6 +6,7 @@ import {
 import CollapsibleTable from './CollapsibleTable';
 // import TodoList from '../../Sqlite3/TodoList';
 import { actions } from "../../actions/actions"
+import EnhancedTable from './EnhancedTable';
 function HomePage() {
   const dispatch = useDispatch()
   const isLoggeIn = useSelector((state) => state.reducers.loggedIn);
@@ -15,15 +16,17 @@ function HomePage() {
   const getAllPatients = () => {
     dispatch(actions.getAllPatients())
   }
+
   return (
     <div>
-      {isLoggeIn && <div>Logged in as <pre>{user}</pre></div>}
-      {isAuthAllowed && <div>Auth is alllowed</div>}
+      {/* {isLoggeIn && <div>Logged in as <pre>{user}</pre></div>} */}
+      {/* {isAuthAllowed && <div>Auth is alllowed</div>} */}
       {/* <TodoList /> */}
-      <pre>{JSON.stringify(TodayPatients)}  </pre>
-      This is HomePage (under development)
+      {/* <pre>{JSON.stringify(TodayPatients)}  </pre> */}
+      {/* This is HomePage (under development) */}
       <button onClick={getAllPatients}>Get all patients from database</button>
       <CollapsibleTable TodayPatients={TodayPatients} />
+      {/* <EnhancedTable /> */}
     </div>
   )
 }

@@ -8,8 +8,9 @@ import { Box, Grid, MenuItem } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   useDispatch,
-  // useSelector
+  useSelector
 } from "react-redux";
+import generateUniqueId from 'generate-unique-id';
 import { actions } from "../../actions/actions"
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,10 +32,19 @@ const patientSchema = yup.object().shape({
   CurrentBp: yup.string().optional(),
   CurrentOxygen: yup.string().optional()
 });
+let Tid = 0;
+const getTid = (prevDate, Tid) => {
+  console.log("prevDate ", prevDate)
+  console.log(`Date.now()`, Date(Date.now()))
+  if (Date(prevDate) < Date(Date.now())) {
+    Tid = 0
+  } else {
+    Tid = Tid + 1
+  }
+  return Tid;
+}
 const PatientForm = ({ closeForm, setId }) => {
   const intialValues = {
-    UId: "1",
-    Tid: "1",
     name: "Daule",
     address: "Manpur Gaya",
     age: 23,
@@ -47,6 +57,8 @@ const PatientForm = ({ closeForm, setId }) => {
   };
   const classes = useStyles();
   const dispatch = useDispatch();
+  const prevDate = useSelector(state => state.reducers.prevDate)
+  const prevId = useSelector(state => state.reducers.prevId)
   const formik = useFormik({
     initialValues: intialValues,
     // {
@@ -65,8 +77,19 @@ const PatientForm = ({ closeForm, setId }) => {
     validationSchema: patientSchema,
     onSubmit: async (values) => {
       // alert(JSON.stringify(values, null, 2));
-      console.log(values, " in forms")
-      const res = await dispatch(actions.add(values))
+      const id = generateUniqueId({
+        length: 8,
+        useNumbers: true,
+        useLetters: false
+      });
+      console.log(`values`, values)
+      const newPat = {
+        Uid: id,
+        Tid: getTid(prevDate, prevId),
+        ...values
+      };
+      console.log(newPat, " in forms")
+      const res = await dispatch(actions.add(newPat))
       console.log("added ", res)
       if (res) {
         setId(res.PID)

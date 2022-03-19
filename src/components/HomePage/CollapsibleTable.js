@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import { TableContainer, TablePagination } from '@material-ui/core';
+import { TableContainer, TablePagination, TableSortLabel } from '@material-ui/core';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
@@ -23,20 +23,31 @@ const useRowStyles = makeStyles({
   },
 });
 
-// function createData(name, calories, fat, carbs, protein, price) {
-//   return {
-//     name,
-//     calories,
-//     fat,
-//     carbs,
-//     protein,
-//     price,
-//     history: [
-//       { date: '2020-01-05', customerId: '11091700', amount: 3 },
-//       { date: '2020-01-02', customerId: 'Anonymous', amount: 1 },
-//     ],
-//   };
-// }
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+function getComparator(order, orderBy) {
+  return order === 'desc'
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+function stableSort(array, comparator) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map((el) => el[0]);
+}
 
 function Row(props) {
   const { row } = props;
@@ -55,8 +66,8 @@ function Row(props) {
         </TableCell>
         <TableCell align="right">{row.address}</TableCell>
         <TableCell align="right">{row.age}</TableCell>
-        <TableCell align="right">{row.UId}</TableCell>
-        <TableCell align="right">{row.protein}</TableCell>
+        <TableCell align="right">{row.gender}</TableCell>
+        <TableCell align="right">{row.Uid}</TableCell>
         < TableCell align="right">{row.Tid}</TableCell>
       </TableRow>
       <TableRow>
@@ -71,7 +82,7 @@ function Row(props) {
                   <TableRow>
                     <TableCell>Temperature</TableCell>
                     <TableCell>BP</TableCell>
-                    <TableCell align="right">OXygen</TableCell>
+                    <TableCell align="right">Oxygen</TableCell>
                     <TableCell align="right">Date Of Appointment</TableCell>
                     <TableCell align="right">Date Of Booking</TableCell>
                   </TableRow>
@@ -126,10 +137,38 @@ function Row(props) {
 //   createData('Cupcake', 305, 3.7, 67, 4.3, 2.5),
 //   createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5),
 // ];
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+  },
+  paper: {
+    width: '100%',
+    marginBottom: theme.spacing(2),
+  },
+  table: {
+    minWidth: 750,
+  },
+  visuallyHidden: {
+    border: 0,
+    clip: 'rect(0 0 0 0)',
+    height: 1,
+    margin: -1,
+    overflow: 'hidden',
+    padding: 0,
+    position: 'absolute',
+    top: 20,
+    width: 1,
+  },
+}));
 
 export default function CollapsibleTable({ TodayPatients }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const classes = useStyles();
+  const [order, setOrder] = React.useState('asc');
+  const [orderBy, setOrderBy] = React.useState('calories');
+  const [selected, setSelected] = React.useState([]);
+  const [dense, setDense] = React.useState(false);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -139,6 +178,52 @@ export default function CollapsibleTable({ TodayPatients }) {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
+
+  // const handleSelectAllClick = (event) => {
+  //   if (event.target.checked) {
+  //     const newSelecteds = rows.map((n) => n.name);
+  //     setSelected(newSelecteds);
+  //     return;
+  //   }
+  //   setSelected([]);
+  // };
+
+  const handleClick = (event, name) => {
+    const selectedIndex = selected.indexOf(name);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, name);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1),
+      );
+    }
+
+    setSelected(newSelected);
+  };
+
+
+  const handleChangeDense = (event) => {
+    setDense(event.target.checked);
+  };
+
+  const isSelected = (name) => selected.indexOf(name) !== -1;
+  const createSortHandler = (property) => (event) => {
+    handleRequestSort(event, property);
+  };
+
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, TodayPatients.length - page * rowsPerPage);
   return (
     <>
       <TableContainer component={Paper}>
@@ -151,13 +236,29 @@ export default function CollapsibleTable({ TodayPatients }) {
               <TableCell align="right">Age</TableCell>
               <TableCell align="right">Gender</TableCell>
               <TableCell align="right">User Id</TableCell>
-              <TableCell align="right">Token Id</TableCell>
+              <TableCell align="right">
+                <TableSortLabel
+                  active={orderBy === "sqltime"}
+                  direction={orderBy === "sqltime" ? order : 'asc'}
+                  onClick={createSortHandler("sqltime")}
+                >
+                  Token Id
+                  {orderBy === "sqltime" ? (
+                    <span className={classes.visuallyHidden}>
+                      {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                    </span>
+                  ) : null}
+                </TableSortLabel></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {TodayPatients.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-              <Row key={row.name} row={row} />
-            ))}
+            {stableSort(TodayPatients, getComparator(order, orderBy))
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row, index) => {
+                const isItemSelected = isSelected(row.name);
+                const labelId = `enhanced-table-checkbox-${index}`;
+                return (<Row key={row.UId} row={row} />)
+              })}
           </TableBody>
         </Table>
       </TableContainer>

@@ -114,6 +114,7 @@ export function reducers(state = initState, action) {
           ...state.TodayPatients,
           action.patient
         ],
+        prevId: action.patient.Tid,
         finalDatas: [
           {
             type: 'text',
@@ -177,8 +178,7 @@ export function reducers(state = initState, action) {
       return {
         ...state,
         TodayPatients: [
-          ...state.TodayPatients,
-          ...action.allPatients
+          ...new Map([...state.TodayPatients, ...action.allPatients].map(item => [item["Tid"], item])).values()
         ],
         loading: false
       };

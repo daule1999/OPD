@@ -1,8 +1,12 @@
+var dateObj = new Date();
+dateObj.setDate(dateObj.getDate() - 1);
+
 export const initState = {
   user: {
     username: "Bhola",
     password: "123456789",
   },
+  prevId: 0,
   loggedIn: false,
   isAuthAllowed: true,
   patient: "hii",
@@ -77,5 +81,6 @@ export const initState = {
         staffNo: "9472643340"
       }
     ]
-  }
+  },
+  prevDate: dateObj
 }
