@@ -50,15 +50,22 @@ export class CompToPrint extends Component {
                 <Table>
                   <TableBody>
                     {obj.tableBody && obj.tableBody.map((row, inx) => {
-                      return <TableRow key={inx}>
-                        <TableCell>{row[0].value}</TableCell>
-                        <TableCell>{row[1].value}</TableCell>
-                      </TableRow>
+                      return <>{
+                        row[1].value && <TableRow key={inx}>
+                          <TableCell>{row[0].value}</TableCell>
+                          <TableCell>{row[1].value}</TableCell>
+                        </TableRow>
+                      }</>
                     })}
+                    <TableRow>
+                      <TableCell>Staff Sign</TableCell>
+                      <TableCell>...............................................</TableCell>
+                    </TableRow>
                   </TableBody>
                 </Table>
               </div>
             }
+
           </div>
         })
         }

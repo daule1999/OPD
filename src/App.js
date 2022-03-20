@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     // Router,
     Route, Switch, Redirect
@@ -26,7 +26,15 @@ function App() {
     // function send(sql) {
     //     sendAsync(sql).then((result) => setResponse(result));
     // }
+    useEffect(() => {
+        console.log("in app", localStorage.getItem("isAuthAllowed"))
+        if (localStorage.getItem("isAuthAllowed")) {
+            localStorage.setItem("isAuthAllowed", false)
+        } else {
+            localStorage.setItem("isAuthAllowed", true)
+        }
 
+    }, [])
     return (
         <div className="App">
             <NavBar />

@@ -146,9 +146,9 @@ export function reducers(state = initState, action) {
             style: 'border: 1px solid #ddd',
             value: 'table',
             tableBody: [
-              [{ type: 'text', value: "Doctor Name" }, { type: 'text', value: "Dr. Angelina" }],
+              [{ type: 'text', value: `UId :  ${action.patient.Uid}` }, { type: 'text', valu: ` Tid : ${action.patient.Tid}` }],
+              [{ type: 'text', value: "Doctor Name" }, { type: 'text', value: action.patient.doctor }],
               [{ type: 'text', value: "Patient Name" }, { type: 'text', value: action.patient.name }],
-              [{ type: 'text', value: `UId :  ${action.patient.UId}` }, { type: 'text', valu: ` Tid : ${action.patient.Tid}` }],
               [{ type: 'text', value: "Address" }, { type: 'text', value: action.patient.address }],
               [{ type: 'text', value: "Age" }, { type: 'text', value: action.patient.age }],
               [{ type: 'text', value: "Gender" }, { type: 'text', value: action.patient.gender }],
@@ -156,9 +156,9 @@ export function reducers(state = initState, action) {
               [{ type: 'text', value: "BP" }, { type: 'text', value: action.patient.currentBp }],
               [{ type: 'text', value: "Oxygen" }, { type: 'text', value: action.patient.currentOxygen }],
               [{
-                type: 'text', value: `dateOfAppoint : ${action.patient.dateOfAppoint}`
+                type: 'text', value: `Booking Date : ${action.patient.dateOfBooking}`
               }, {
-                type: 'text', value: `dateOfBooking : ${action.patient.dateOfBooking}`
+                type: 'text', value: `Appointment Date : ${action.patient.dateOfAppoint}`
               }],
               [{ type: 'text', value: "Fee" }, { type: 'text', value: "200 Rs" }],
             ],

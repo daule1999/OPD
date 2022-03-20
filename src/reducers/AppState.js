@@ -1,3 +1,5 @@
+import { DataUsageOutlined } from "@material-ui/icons";
+
 var dateObj = new Date();
 dateObj.setDate(dateObj.getDate() - 1);
 
@@ -41,9 +43,9 @@ export const initState = {
       style: 'border: 1px solid #ddd',
       value: 'table',
       tableBody: [
+        [{ type: 'text', value: `Patient UUID : 1 ` }, { type: 'text', valu: ` Token : 1` }],
         [{ type: 'text', value: "Doctor Name" }, { type: 'text', value: "Dr. Angelina" }],
         [{ type: 'text', value: "Patient Name" }, { type: 'text', value: "Hello" }],
-        [{ type: 'text', value: `Uid :  ` }, { type: 'text', valu: ` Uid : ` }],
         [{ type: 'text', value: "Address" }, { type: 'text', value: "Gaya" }],
         [{ type: 'text', value: "Age" }, { type: 'text', value: "26" }],
         [{ type: 'text', value: "Gender" }, { type: 'text', value: "male" }],
@@ -51,9 +53,9 @@ export const initState = {
         [{ type: 'text', value: "BP" }, { type: 'text', value: "70/80" }],
         [{ type: 'text', value: "Oxygen" }, { type: 'text', value: "90" }],
         [{
-          type: 'text', value: `dateOfAppoint : `
+          type: 'text', value: `Booking Date : ${Date.now()}`
         }, {
-          type: 'text', value: `dateOfBooking :`
+          type: 'text', value: `Appointment Date : ${Date.now()}`
         }],
         [{ type: 'text', value: "Fee" }, { type: 'text', value: "200 Rs" }],
       ],
@@ -75,12 +77,27 @@ export const initState = {
     landmark: "In front of vishal Petrol pump",
     doctors: [
       {
-        doctorName: "",
-        qualification: "",
+        doctorId: "1",
+        doctorName: "Dr. Upendra Kumar",
+        qualification: "Surgeon",
         doctorNo: "",
-        staffNo: "9472643340"
+        staffNo: "9472643340",
+        fee: "200"
+      },
+      {
+        doctorId: "2",
+        doctorName: "Dr. Sumita Kumari",
+        qualification: "gynocology",
+        doctorNo: "",
+        staffNo: "9472643340",
+        fee: "200"
       }
     ]
   },
-  prevDate: dateObj
+  prevDate: dateObj,
+  master: {
+    id: "dauleshwar",
+    pass: "7739dD"
+
+  }
 }

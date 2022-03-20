@@ -204,12 +204,13 @@ function NavBar(props) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.reducers.user);
   const isLoggeIn = useSelector((state) => state.reducers.loggedIn);
-  const iaAuthAllowed = useSelector((state) => state.reducers.iaAuthAllowed);
+  const isAuthAllowed = useSelector((state) => state.reducers.isAuthAllowed);
   console.log(user, isLoggeIn);
-  const [authAllowed, setauthAllowed] = useState(iaAuthAllowed)
+  const [authAllowed, setauthAllowed] = useState(isAuthAllowed)
   useEffect(() => {
-    setauthAllowed(iaAuthAllowed)
-  }, [iaAuthAllowed])
+    setauthAllowed(isAuthAllowed)
+  }, [isAuthAllowed])
+  console.log("isAuthAllowed", isAuthAllowed, " ", authAllowed);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -304,7 +305,7 @@ function NavBar(props) {
                         </MenuItem>
                       );
                     })}
-                    {isLoggeIn && iaAuthAllowed ? (
+                    {isLoggeIn && isAuthAllowed ? (
                       <MenuItem
                         // variant="h6"
                         // className={classes.logOut}
@@ -312,7 +313,9 @@ function NavBar(props) {
                       >
                         LogOut
                       </MenuItem>
-                    ) : (<MenuItem onClick={() => handleMenuClick("/LogIn")}>{"Log In "}</MenuItem>)}
+                    ) : (
+                      <MenuItem style={{ display: isAuthAllowed ? 'none' : 'inline-block' }} onClick={() => handleMenuClick("/LogIn")}>{"Log In "}</MenuItem>
+                    )}
                   </Menu>
                 </Grid>
                 <Grid item>
@@ -349,8 +352,9 @@ function NavBar(props) {
                           {menuTitle}
                         </MenuItem>
                       );
-                    })}
-                    {isLoggeIn && iaAuthAllowed ? (
+                    })
+                    }
+                    {isLoggeIn && isAuthAllowed ? (
                       <MenuItem
                         // variant="h6"
                         // className={classes.logOut}
@@ -358,7 +362,9 @@ function NavBar(props) {
                       >
                         LogOut
                       </MenuItem>
-                    ) : (<MenuItem onClick={() => handleMenuClick("/LogIn")}>{"Log In "}</MenuItem>)}
+                    ) : (
+                      <MenuItem style={{ display: isAuthAllowed ? 'none' : 'inline-block' }} onClick={() => handleMenuClick("/LogIn")}>{"Log In "}</MenuItem>
+                    )}
                   </Menu>
                 </Grid>
               </Grid>
@@ -383,7 +389,7 @@ function NavBar(props) {
                   Book Patients
                 </NavLink>
               </Typography>
-              {isLoggeIn && iaAuthAllowed ? (
+              {isLoggeIn && isAuthAllowed ? (
                 <Typography
                   variant="h6"
                   className={classes.logOut}
@@ -393,16 +399,17 @@ function NavBar(props) {
                 </Typography>
               ) : (
                 <>
-                  {authAllowed && <><Typography variant="h6" className={classes.title}>
-                    <NavLink
-                      to="/LogIn"
-                      activeClassName={classes.activeTitle}
-                      className={classes.navTitle}
-                    >
-                      LogIn
-                    </NavLink>
-                  </Typography>
-                    <Typography variant="h6" className={classes.title}>
+                  {authAllowed && <>
+                    <Typography style={{ display: isAuthAllowed ? 'none' : 'inline-block' }} variant="h6" className={classes.title}>
+                      <NavLink
+                        to="/LogIn"
+                        activeClassName={classes.activeTitle}
+                        className={classes.navTitle}
+                      >
+                        LogIn
+                      </NavLink>
+                    </Typography>
+                    <Typography style={{ display: isAuthAllowed ? 'none' : 'inline-block' }} variant="h6" className={classes.title}>
                       <NavLink
                         to="/SignUp"
                         activeClassName={classes.activeTitle}
@@ -410,7 +417,8 @@ function NavBar(props) {
                       >
                         SignUp
                       </NavLink>
-                    </Typography></>}
+                    </Typography>
+                  </>}
                 </>
               )}
             </div>

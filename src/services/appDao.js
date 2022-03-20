@@ -1,14 +1,27 @@
 const sqlite3 = window.require('sqlite3')
 const Promise = window.require('bluebird');
 // const dbPath = path.join(app.getPath("userData"), "sample.db")
+const fs = window.require('fs')
 const path = window.require('path')
 class AppDAO {
   constructor(dbFilePath) {
-    this.db = new sqlite3.Database(dbFilePath, (err) => {
+    // const dbDirectory = isDev
+    // ? 
+    // const dbDirectory = app.getAppPath() + "\\database"
+    // : app.getAppPath().replace("app.asar", "localStorage");
+
+    // if (!fs.existsSync(dbDirectory)) fs.mkdirSync(dbDirectory);
+
+    // const dbAddress = dbDirectory + "\\client_db.db";
+    const isDev = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development')
+    console.log(fs, " fs ", "path ", path, "dbFilePath ", ":memory:")
+    const filePath = isDev ? dbFilePath : path.join(window.__dirname, "..", "..", "..", "..", "..", "..", "..", "database.sqlite3")
+    console.log(filePath)
+    this.db = new sqlite3.Database(filePath, (err) => {
       if (err) {
         console.log('Could not connect to database', err)
       } else {
-        console.log('Connected to database ', path, dbFilePath)
+        console.log('Connected to database ', filePath)
       }
     })
   }

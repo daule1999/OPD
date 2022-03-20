@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import React from "react";
+import React, { useState } from "react";
 import { Box, Grid, MenuItem } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -12,6 +12,8 @@ import {
 } from "react-redux";
 import generateUniqueId from 'generate-unique-id';
 import { actions } from "../../actions/actions"
+import DateFnsUtils from "@date-io/date-fns"
+import { MuiPickersUtilsProvider, DatePicker, DateTimePicker } from "@material-ui/pickers"
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
@@ -28,20 +30,13 @@ const patientSchema = yup.object().shape({
     .positive("Age should be greater than 0")
     .max(150, "Age should be less than 150 years").optional(),
   gender: yup.string().oneOf(['male', 'female'], "Gender should be male or female").required("Enter a valid Gender"),
-  CurrentTemp: yup.number().min(0, "temperature should be greater than 0").max(150, "temperature should be less than 150").optional(),
-  CurrentBp: yup.string().optional(),
-  CurrentOxygen: yup.string().optional()
+  currentTemp: yup.number().min(0, "temperature should be greater than 0").max(150, "temperature should be less than 150").optional(),
+  currentBp: yup.string().optional(),
+  currentOxygen: yup.string().optional(),
+  doctor: yup.string().required('Choose Doctor')
 });
-let Tid = 0;
-const getTid = (prevDate, Tid) => {
-  console.log("prevDate ", prevDate)
-  console.log(`Date.now()`, Date(Date.now()))
-  if (Date(prevDate) < Date(Date.now())) {
-    Tid = 0
-  } else {
-    Tid = Tid + 1
-  }
-  return Tid;
+const getDateString = (date) => {
+  return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
 }
 const PatientForm = ({ closeForm, setId }) => {
   const intialValues = {
@@ -52,13 +47,15 @@ const PatientForm = ({ closeForm, setId }) => {
     currentTemp: "99",
     currentBp: "70/90",
     currentOxygen: "20",
-    dateOfAppoint: "12/03/22",
-    dateOfBooking: "12/03/22"
+    dateOfBooking: new Date(),
+    doctor: "1"
   };
   const classes = useStyles();
   const dispatch = useDispatch();
   const prevDate = useSelector(state => state.reducers.prevDate)
   const prevId = useSelector(state => state.reducers.prevId)
+  const doctors = useSelector(state => state.reducers.OPD.doctors)
+  const [selectedDate, handleDateChange] = useState(new Date())
   const formik = useFormik({
     initialValues: intialValues,
     // {
@@ -82,11 +79,13 @@ const PatientForm = ({ closeForm, setId }) => {
         useNumbers: true,
         useLetters: false
       });
-      console.log(`values`, values)
+      console.log(`values`, selectedDate, " correct =", values)
       const newPat = {
         Uid: id,
-        Tid: getTid(prevDate, prevId),
-        ...values
+        Tid: 1,
+        dateOfAppoint: getDateString(new Date()),
+        ...values,
+        dateOfBooking: getDateString(selectedDate),
       };
       console.log(newPat, " in forms")
       const res = await dispatch(actions.add(newPat))
@@ -100,11 +99,49 @@ const PatientForm = ({ closeForm, setId }) => {
 
 
   return (
-    <Box mx={9}>
+    <Box mx={9} mt={2}>
       <form className={classes.root} onSubmit={formik.handleSubmit}>
         <Grid container direction='column' justifyContent='center' alignItems='center'>
           <Grid item>Patient Form</Grid>
           <Grid item container direction='column' justifyContent='space-evenly' alignItems='center'>
+            <Grid item container justifyContent='space-evenly' alignItems='center'>
+              <Grid item>
+                <TextField
+                  id="doctor"
+                  fullWidth
+                  name="doctor"
+                  select
+                  label="Doctor"
+                  // style={{ paddingLeft: "18px", paddingRight: "18px" }}
+                  value={formik.values.doctor}
+                  onChange={formik.handleChange}
+                  helperText={formik.touched.doctor && formik.errors.doctor}
+                  error={formik.touched.doctor && Boolean(formik.errors.doctor)}
+                >
+                  {doctors.map((doc) => {
+                    return <MenuItem value={doc.doctorId} >
+                      {`${doc.doctorName} (${doc.qualification}) Fee:${doc.fee}`}
+                    </MenuItem>
+                  })}
+                </TextField>
+              </Grid>
+              <Grid item>
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <DatePicker
+                    id="dateOfBooking"
+                    fullWidth
+                    name="dateOfBooking"
+                    label="Booking Date"
+                    autoOk
+                    // style={{ paddingLeft: "18px", paddingRight: "18px" }}
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                  // helperText={formik.touched.dateOfBooking && formik.errors.dateOfBooking}
+                  // error={formik.touched.dateOfBooking && Boolean(formik.errors.dateOfBooking)}
+                  ></DatePicker>
+                </MuiPickersUtilsProvider>
+              </Grid>
+            </Grid>
             <Grid item>
               <TextField
                 fullWidth
@@ -232,7 +269,7 @@ const PatientForm = ({ closeForm, setId }) => {
           </Grid>
         </Grid>
       </form>
-    </Box>
+    </Box >
   );
 };
 
