@@ -40,13 +40,13 @@ const getDateString = (date) => {
 }
 const PatientForm = ({ closeForm, setId }) => {
   const intialValues = {
-    name: "Daule",
-    address: "Manpur Gaya",
+    name: "",
+    address: "",
     age: 23,
-    gender: "Male",
-    currentTemp: "99",
-    currentBp: "70/90",
-    currentOxygen: "20",
+    gender: "",
+    currentTemp: "",
+    currentBp: "",
+    currentOxygen: "",
     dateOfBooking: new Date(),
     doctor: "1"
   };
