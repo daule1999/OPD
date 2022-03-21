@@ -49,9 +49,9 @@ export const initState = {
         [{ type: 'text', value: "Address" }, { type: 'text', value: "Gaya" }],
         [{ type: 'text', value: "Age" }, { type: 'text', value: "26" }],
         [{ type: 'text', value: "Gender" }, { type: 'text', value: "male" }],
-        [{ type: 'text', value: "Temp." }, { type: 'text', value: "98" }],
-        [{ type: 'text', value: "BP" }, { type: 'text', value: "70/80" }],
-        [{ type: 'text', value: "Oxygen" }, { type: 'text', value: "90" }],
+        [{ type: 'text', value: "Body Temprature(F)" }, { type: 'text', value: "98" }],
+        [{ type: 'text', value: "Blood Pressure(BP)" }, { type: 'text', value: "70/80" }],
+        [{ type: 'text', value: "Oxygen Level(BLO)" }, { type: 'text', value: "90" }],
         [{
           type: 'text', value: `Booking Date : ${Date.now()}`
         }, {

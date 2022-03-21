@@ -35,7 +35,7 @@ function Profile() {
           </Grid>
           <Grid item >
             {data.doctors.map(e => {
-              return <Grid container key={e}>
+              return <Grid container key={e} justifyContent='space-evenly'>
                 <Grid item>
                   {e.doctorName && <Typography>Doctor Name : {e.doctorName}</Typography>}
                 </Grid>

@@ -28,7 +28,7 @@ const patientSchema = yup.object().shape({
   address: yup.string().required("Enter a valid Address"),
   age: yup.number().required("Enter a valid age")
     .positive("Age should be greater than 0")
-    .max(150, "Age should be less than 150 years").optional(),
+    .max(150, "Age should be less than 150 years"),
   gender: yup.string().oneOf(['male', 'female'], "Gender should be male or female").required("Enter a valid Gender"),
   currentTemp: yup.number().min(0, "temperature should be greater than 0").max(150, "temperature should be less than 150").optional(),
   currentBp: yup.string().optional(),
@@ -151,7 +151,7 @@ const PatientForm = ({ closeForm, setId }) => {
                 id="name"
                 name="name"
                 style={{ width: "50ch" }}
-                label="name"
+                label="Full Name"
                 value={formik.values.name}
                 onChange={formik.handleChange}
                 error={formik.touched.name && Boolean(formik.errors.name)}
@@ -166,7 +166,7 @@ const PatientForm = ({ closeForm, setId }) => {
                 style={{ width: "50ch" }}
                 id="address"
                 name="address"
-                label="address"
+                label="Address"
                 value={formik.values.address}
                 onChange={formik.handleChange}
                 error={formik.touched.address && Boolean(formik.errors.address)}
@@ -179,7 +179,7 @@ const PatientForm = ({ closeForm, setId }) => {
                   fullWidth
                   id="age"
                   name="age"
-                  label="age"
+                  label="Age"
                   value={formik.values.age}
                   onChange={formik.handleChange}
                   error={formik.touched.age && Boolean(formik.errors.age)}
@@ -226,7 +226,7 @@ const PatientForm = ({ closeForm, setId }) => {
                   fullWidth
                   id="currentTemp"
                   name="currentTemp"
-                  label="currentTemp"
+                  label="Body Temprature(F)"
                   value={formik.values.currentTemp}
                   onChange={formik.handleChange}
                   error={formik.touched.currentTemp && Boolean(formik.errors.currentTemp)}
@@ -238,7 +238,7 @@ const PatientForm = ({ closeForm, setId }) => {
                   fullWidth
                   id="currentBp"
                   name="currentBp"
-                  label="currentBp"
+                  label="Blood Pressure(BP)"
                   value={formik.values.currentBp}
                   onChange={formik.handleChange}
                   error={formik.touched.currentBp && Boolean(formik.errors.currentBp)}
@@ -250,7 +250,7 @@ const PatientForm = ({ closeForm, setId }) => {
                   fullWidth
                   id="currentOxygen"
                   name="currentOxygen"
-                  label="currentOxygen"
+                  label="Oxygen Level"
                   value={formik.values.currentOxygen}
                   onChange={formik.handleChange}
                   error={formik.touched.currentOxygen && Boolean(formik.errors.currentOxygen)}

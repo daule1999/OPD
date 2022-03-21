@@ -154,9 +154,9 @@ export function reducers(state = initState, action) {
               [{ type: 'text', value: "Address" }, { type: 'text', value: action.patient.address }],
               [{ type: 'text', value: "Age" }, { type: 'text', value: action.patient.age }],
               [{ type: 'text', value: "Gender" }, { type: 'text', value: action.patient.gender }],
-              [{ type: 'text', value: "Temp." }, { type: 'text', value: action.patient.currentTemp }],
-              [{ type: 'text', value: "BP" }, { type: 'text', value: action.patient.currentBp }],
-              [{ type: 'text', value: "Oxygen" }, { type: 'text', value: action.patient.currentOxygen }],
+              [{ type: 'text', value: "Body Temprature(F)." }, { type: 'text', value: action.patient.currentTemp }],
+              [{ type: 'text', value: "Blood Pressure(BP)" }, { type: 'text', value: action.patient.currentBp }],
+              [{ type: 'text', value: "Oxygen Level(BLO)" }, { type: 'text', value: action.patient.currentOxygen }],
               [{
                 type: 'text', value: `Booking Date : ${action.patient.dateOfBooking}`
               }, {
