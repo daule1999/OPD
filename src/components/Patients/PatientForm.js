@@ -42,7 +42,7 @@ const PatientForm = ({ closeForm, setId }) => {
   const intialValues = {
     name: "",
     address: "",
-    age: 23,
+    age: "",
     gender: "",
     currentTemp: "",
     currentBp: "",
