@@ -36,39 +36,42 @@ export class CompToPrint extends Component {
     }
     return (
       <div>
-        {finalDatas && finalDatas.map((obj) => {
-          return <div key={obj.value} >
-            {
-              obj.type === 'text' && <Box key={obj.value}>
-                <Typography style={{ textAlign: 'center', fontWeight: `${obj.css["font-weight"]}`, fontSize: `${obj.css["font-size"]}` }} >
-                  {obj.value}
-                </Typography>
-              </Box>
-            }
-            {
-              obj.type === 'table' && <div key={obj.value}>
-                <Table>
-                  <TableBody>
-                    {obj.tableBody && obj.tableBody.map((row, inx) => {
-                      return <>{
-                        row[1].value && <TableRow key={inx}>
-                          <TableCell>{row[0].value}</TableCell>
-                          <TableCell>{row[1].value}</TableCell>
-                        </TableRow>
-                      }</>
-                    })}
-                    <TableRow>
-                      <TableCell>Staff Sign</TableCell>
-                      <TableCell>...............................................</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </div>
-            }
+        <Box mt={2} mb={6}>
+          {finalDatas && finalDatas.map((obj) => {
+            return <div key={obj.value} >
+              {
+                obj.type === 'text' && <Box key={obj.value}>
+                  <Typography style={{ textAlign: 'center', fontWeight: `${obj.css["font-weight"]}`, fontSize: `${obj.css["font-size"]}` }} >
+                    {obj.value}
+                  </Typography>
+                </Box>
+              }
+              {
+                obj.type === 'table' && <div key={obj.value}>
+                  <Table>
+                    <TableBody>
+                      {obj.tableBody && obj.tableBody.map((row, inx) => {
+                        console.log("rowVal ", row)
+                        return <>{
+                          row[1].value && <TableRow key={inx}>
+                            <TableCell>{row[0].value}</TableCell>
+                            <TableCell>{row[1].value}</TableCell>
+                          </TableRow>
+                        }</>
+                      })}
+                      <TableRow>
+                        <TableCell>Staff Sign</TableCell>
+                        <TableCell>...............................................</TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </div>
+              }
 
-          </div>
-        })
-        }
+            </div>
+          })
+          }
+        </Box>
       </div >
     );
   }

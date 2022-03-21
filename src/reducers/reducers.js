@@ -1,3 +1,4 @@
+
 import {
   SUCCESS_ALERT,
   ERROR_ALERT,
@@ -26,7 +27,8 @@ import {
   REGISTER_SUCCESS,
   GET_PRINT_REQUEST,
   GET_PRINT_FAILURE,
-  GET_PRINT_SUCCESS
+  GET_PRINT_SUCCESS,
+  SET_TID_SUCCESS
 } from "../actionConstants/actionConstants"
 import { initState } from "./AppState"
 
@@ -146,8 +148,8 @@ export function reducers(state = initState, action) {
             style: 'border: 1px solid #ddd',
             value: 'table',
             tableBody: [
-              [{ type: 'text', value: `UId :  ${action.patient.Uid}` }, { type: 'text', valu: ` Tid : ${action.patient.Tid}` }],
-              [{ type: 'text', value: "Doctor Name" }, { type: 'text', value: action.patient.doctor }],
+              [{ type: 'text', value: `Patient UUId :  ${action.patient.Uid}` }, { type: 'text', value: ` Token No : ${action.patient.Tid}` }],
+              [{ type: 'text', value: "Doctor Name" }, { type: 'text', value: state.OPD.doctors[action.patient.doctor - 1].doctorName }],
               [{ type: 'text', value: "Patient Name" }, { type: 'text', value: action.patient.name }],
               [{ type: 'text', value: "Address" }, { type: 'text', value: action.patient.address }],
               [{ type: 'text', value: "Age" }, { type: 'text', value: action.patient.age }],
@@ -193,6 +195,11 @@ export function reducers(state = initState, action) {
         patient: action.data.patient,
         finalPrintData: action.data.finalPrintData,
         loading: false
+      };
+    case SET_TID_SUCCESS:
+      return {
+        ...state,
+        newTid: action.tidRes
       };
     case ADD_PATIENT_FAILURE:
     case DELETE_PATIENT_FAILURE:

@@ -62,5 +62,32 @@ class PatientCrud {
     return this.dao.all("select * from OPDTable")
   }
 
+  createTidTable() {
+    console.log("creating Tid table.......")
+    const sql = `CREATE TABLE IF NOT EXISTS TidTable(id INTEGER primary key AUTOINCREMENT,date text,currentTid INTEGER DEFAULT 2)`
+    return this.dao.run(sql);
+  }
+  getAllTid() {
+    const sql = "select * from TidTable";
+    return this.dao.all(sql);
+  }
+
+  getCurrentTid(date) {
+    console.log("getting Tid .......", date)
+    const sql = "select currentTid from TidTable where date LIKE ?";
+    return this.dao.get(sql, ['%' + date + '%']);
+  }
+  insertNewTid(date) {
+    console.log("inserting new Tid .......", date)
+    const sql = "INSERT INTO TidTable (date) values(?)";
+    return this.dao.run(sql, [date])
+  }
+
+  setNextTid({ tid, date }) {
+    console.log("setting next Tid .......", tid, "  ", date)
+    const sql = "update TidTable set currentTid=? where date=?";
+    return this.dao.run(sql, [tid, date])
+  }
+
 }
 export default PatientCrud;

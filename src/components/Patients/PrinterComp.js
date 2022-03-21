@@ -22,7 +22,7 @@ function PrinterComp({ id, setPrint, finalData, patient, addNewPatient }) {
   // })
   return (
     <div>{patient &&
-      <Box width="50%" mx="auto">
+      <Box width="50%" mx="auto" mt={2} mb={4}>
         <Grid container justifyContent="space-evenly">
           <Grid item>
             <Switch

@@ -56,6 +56,8 @@ const PatientForm = ({ closeForm, setId }) => {
   const prevId = useSelector(state => state.reducers.prevId)
   const doctors = useSelector(state => state.reducers.OPD.doctors)
   const [selectedDate, handleDateChange] = useState(new Date())
+  const tid = useSelector(state => state.reducers.newTid.id)
+
   const formik = useFormik({
     initialValues: intialValues,
     // {
@@ -79,10 +81,11 @@ const PatientForm = ({ closeForm, setId }) => {
         useNumbers: true,
         useLetters: false
       });
-      console.log(`values`, selectedDate, " correct =", values)
+      const newTid = await dispatch(actions.getNextTid(getDateString(new Date())))
+      console.log(`values`, selectedDate, " correct =", values, newTid)
       const newPat = {
         Uid: id,
-        Tid: 1,
+        Tid: newTid.currentTid,
         dateOfAppoint: getDateString(new Date()),
         ...values,
         dateOfBooking: getDateString(selectedDate),

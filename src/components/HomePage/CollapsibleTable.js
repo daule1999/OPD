@@ -64,11 +64,11 @@ function Row(props) {
         <TableCell component="th" scope="row">
           {row.name}
         </TableCell>
-        <TableCell align="right">{row.address}</TableCell>
-        <TableCell align="right">{row.age}</TableCell>
-        <TableCell align="right">{row.gender}</TableCell>
-        <TableCell align="right">{row.Uid}</TableCell>
-        < TableCell align="right">{row.Tid}</TableCell>
+        <TableCell align="center">{row.address}</TableCell>
+        <TableCell align="center">{row.age}</TableCell>
+        <TableCell align="center">{row.gender}</TableCell>
+        <TableCell align="center">{row.Uid}</TableCell>
+        < TableCell align="center">{row.Tid}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -232,11 +232,11 @@ export default function CollapsibleTable({ TodayPatients }) {
             <TableRow>
               <TableCell />
               <TableCell>Name</TableCell>
-              <TableCell align="right">Address</TableCell>
-              <TableCell align="right">Age</TableCell>
-              <TableCell align="right">Gender</TableCell>
-              <TableCell align="right">User Id</TableCell>
-              <TableCell align="right">
+              <TableCell align="center">Address</TableCell>
+              <TableCell align="center">Age</TableCell>
+              <TableCell align="center">Gender</TableCell>
+              <TableCell align="center">User Id</TableCell>
+              <TableCell align="center">
                 <TableSortLabel
                   active={orderBy === "sqltime"}
                   direction={orderBy === "sqltime" ? order : 'asc'}

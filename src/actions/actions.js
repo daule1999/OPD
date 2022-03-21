@@ -38,7 +38,11 @@ import {
   SET_OPD_FAILURE,
   GETALL_PATIENT_REQUEST,
   GETALL_PATIENT_SUCCESS,
-  GETALL_PATIENT_FAILURE
+  GETALL_PATIENT_FAILURE,
+  SET_TID_SUCCESS,
+  GET_TID_REQUEST,
+  GET_TID_SUCCESS,
+  GET_TID_FAILURE
 } from "../actionConstants/actionConstants"
 
 import { services } from "../services/services";
@@ -207,6 +211,9 @@ function add(patient) {
       console.group("before actions ", patient)
       const res = await services.addPatient(patient)
       console.log(res, " after actions")
+      const tidRes = await services.setTid(patient.dateOfBooking)
+      console.log(tidRes, " after actions tidRes")
+      dispatch({ type: SET_TID_SUCCESS, tidRes })
       dispatch(success(patient))
       return res
 
@@ -293,9 +300,9 @@ function getPrintData(patient) {
     type: 'table',
     style: 'border: 1px solid #ddd',
     tableBody: [
+      [{ type: 'text', value: `Uid :  ${patient.UId}` }, { type: 'text', value: ` Uid : patient.Tid` }],
       [{ type: 'text', value: "Doctor Name" }, { type: 'text', value: "Dr. Angelina" }],
       [{ type: 'text', value: "Patient Name" }, { type: 'text', value: patient.name }],
-      [{ type: 'text', value: `Uid :  ${patient.UId}` }, { type: 'text', valu: ` Uid : patient.Tid` }],
       [{ type: 'text', value: "Address" }, { type: 'text', value: patient.address }],
       [{ type: 'text', value: "Age" }, { type: 'text', value: patient.age }],
       [{ type: 'text', value: "Gender" }, { type: 'text', value: patient.gender }],
@@ -416,6 +423,30 @@ function setOPD(opd) {
   }
 }
 
+function getNextTid(date) {
+  return async (dispatch, getState) => {
+    dispatch(request());
+    try {
+      const res = await services.getTid(date)
+      console.log(res, " in actions")
+      dispatch(success(res))
+      return res
+
+    } catch (error) {
+      dispatch(failure(error.toString()));
+    }
+  }
+  function request() {
+    return { type: GET_TID_REQUEST };
+  }
+  function success(opd) {
+    return { type: GET_TID_SUCCESS, opd };
+  }
+  function failure(error) {
+    return { type: GET_TID_FAILURE, error };
+  }
+}
+
 export const actions = {
   login,
   logout,
@@ -433,5 +464,6 @@ export const actions = {
   getPrintStart,
   getPrintDone,
   getPrintFail,
-  setOPD
+  setOPD,
+  getNextTid
 };

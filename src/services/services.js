@@ -12,7 +12,9 @@ export const services = {
   addPatient,
   getPatient,
   setOPD,
-  getAllPatients
+  getAllPatients,
+  setTid,
+  getTid
 };
 
 
@@ -214,6 +216,58 @@ async function setOPD(opd) {
       const res = await db.insertOPDData(opd)
       console.log("in service patient = ", res)
       return res;
+    } else {
+      console.log("in service error")
+      return
+    }
+  } catch (err) {
+    console.log("in service ", err)
+  }
+}
+
+async function setTid(date) {
+  const db = setDatabase();
+  try {
+    console.log("before service ", date)
+    const cres = await db.createTidTable()
+    console.log("TidTable created", cres)
+    if (cres) {
+      const getRes = await db.getCurrentTid(date)
+      console.log(getRes, "getRes")
+      if (getRes?.currentTid > 0) {
+        const tid = getRes.currentTid + 1
+        console.log("setting setNextTid ", tid, date)
+        const res = await db.setNextTid({ tid, date })
+        console.log("in service setTid = ", { id: tid })
+        return { id: tid }
+      } else {
+        const neres = await db.insertNewTid(date)
+        console.log("in service setTid insertNewTid", neres)
+        return { id: 2 };
+      }
+
+    }
+  } catch (err) {
+    console.log("in service setTid ", err)
+  }
+}
+
+async function getTid(date) {
+  const db = setDatabase();
+  try {
+    console.log("before service getTid", date)
+    const cres = await db.createTidTable()
+    if (cres) {
+      const res = await db.getCurrentTid(date)
+      if (res) {
+        console.log("in service getTid = ", res)
+        const ares = await db.getAllTid()
+        console.log("in service all tid", ares)
+        return res;
+      } else {
+        return { currentTid: 1 }
+      }
+
     } else {
       console.log("in service error")
       return

@@ -43,7 +43,7 @@ export const initState = {
       style: 'border: 1px solid #ddd',
       value: 'table',
       tableBody: [
-        [{ type: 'text', value: `Patient UUID : 1 ` }, { type: 'text', valu: ` Token : 1` }],
+        [{ type: 'text', value: `Patient UUID : 1 ` }, { type: 'text', value: ` Token : 1` }],
         [{ type: 'text', value: "Doctor Name" }, { type: 'text', value: "Dr. Angelina" }],
         [{ type: 'text', value: "Patient Name" }, { type: 'text', value: "Hello" }],
         [{ type: 'text', value: "Address" }, { type: 'text', value: "Gaya" }],
@@ -70,6 +70,7 @@ export const initState = {
   notPrinted: [],
   Printed: [],
   TodayPatients: [],
+  newTid: { id: 1 },
   OPD: {
     opdName: "ANGELINA LIFE CARE HOSPITAL",
     address1: "Mofassil Mod, Khizarsarai Road",
