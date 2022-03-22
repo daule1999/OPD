@@ -42,7 +42,10 @@ import {
   SET_TID_SUCCESS,
   GET_TID_REQUEST,
   GET_TID_SUCCESS,
-  GET_TID_FAILURE
+  GET_TID_FAILURE,
+  GETALL_PATIENT_BYDATE_FAILURE,
+  GETALL_PATIENT_BYDATE_REQUEST,
+  GETALL_PATIENT_BYDATE_SUCCESS
 } from "../actionConstants/actionConstants"
 
 import { services } from "../services/services";
@@ -372,6 +375,31 @@ function getAllPatients() {
     return { type: GETALL_PATIENT_FAILURE, error };
   }
 }
+
+function getPatientsByDate(date) {
+  return async (dispatch, getState) => {
+    dispatch(request());
+    try {
+      const res = await services.getAllPatientsBydate(date)
+      console.log(res, " in actions")
+      dispatch(success(res))
+      return res
+
+    } catch (error) {
+      dispatch(failure(error.toString()));
+    }
+  }
+
+  function request() {
+    return { type: GETALL_PATIENT_BYDATE_REQUEST };
+  }
+  function success(allPatients) {
+    return { type: GETALL_PATIENT_BYDATE_SUCCESS, allPatients };
+  }
+  function failure(error) {
+    return { type: GETALL_PATIENT_BYDATE_FAILURE, error };
+  }
+}
 function getPrintStart(id) {
   return (dispatch, getState) => {
     dispatch(request(id));
@@ -426,6 +454,7 @@ function setOPD(opd) {
   }
 }
 
+
 function getNextTid(date) {
   return async (dispatch, getState) => {
     dispatch(request());
@@ -468,5 +497,6 @@ export const actions = {
   getPrintDone,
   getPrintFail,
   setOPD,
-  getNextTid
+  getNextTid,
+  getPatientsByDate
 };

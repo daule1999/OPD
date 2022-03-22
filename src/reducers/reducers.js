@@ -28,10 +28,13 @@ import {
   GET_PRINT_REQUEST,
   GET_PRINT_FAILURE,
   GET_PRINT_SUCCESS,
-  SET_TID_SUCCESS
+  SET_TID_SUCCESS,
+  GETALL_PATIENT_BYDATE_SUCCESS
 } from "../actionConstants/actionConstants"
 import { initState } from "./AppState"
-
+const getDateString = (date) => {
+  return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
+}
 export function reducers(state = initState, action) {
   console.log(state, "in reducer state")
   switch (action.type) {
@@ -114,7 +117,7 @@ export function reducers(state = initState, action) {
         loading: false,
         TodayPatients: [
           ...state.TodayPatients,
-          action.patient
+          action?.patient?.dateOfAppoint === getDateString(new Date()) && action.patient
         ],
         prevId: action.patient.Tid,
         finalDatas: [
@@ -181,6 +184,14 @@ export function reducers(state = initState, action) {
         ...state,
         TodayPatients: [
           ...new Map([...state.TodayPatients, ...action.allPatients].map(item => [item["Tid"], item])).values()
+        ],
+        loading: false
+      };
+    case GETALL_PATIENT_BYDATE_SUCCESS:
+      return {
+        ...state,
+        TodayPatients: [
+          ...new Map([...action.allPatients].map(item => [item["Tid"], item])).values()
         ],
         loading: false
       };

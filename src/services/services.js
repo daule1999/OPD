@@ -14,7 +14,8 @@ export const services = {
   setOPD,
   getAllPatients,
   setTid,
-  getTid
+  getTid,
+  getAllPatientsBydate
 };
 
 
@@ -60,6 +61,18 @@ async function getAllPatients() {
   try {
     console.log("in service getAllPatients = ")
     const res = await db.getAllPatients()
+    console.log("in service getAllPatients = ", res)
+    return res;
+  } catch (err) {
+    console.log("in service ", err)
+  }
+}
+
+async function getAllPatientsBydate(date) {
+  const db = setDatabase();
+  try {
+    console.log("in service getAllPatients = ")
+    const res = await db.getAllPatientsByDate(date)
     console.log("in service getAllPatients = ", res)
     return res;
   } catch (err) {

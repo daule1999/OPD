@@ -6,7 +6,11 @@ import {
 import CollapsibleTable from './CollapsibleTable';
 // import TodoList from '../../Sqlite3/TodoList';
 import { actions } from "../../actions/actions"
-import EnhancedTable from './EnhancedTable';
+import { Box, Grid, Button } from "@material-ui/core"
+// import EnhancedTable from './EnhancedTable';
+const getDateString = (date) => {
+  return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
+}
 function HomePage() {
   const dispatch = useDispatch()
   const isLoggeIn = useSelector((state) => state.reducers.loggedIn);
@@ -19,6 +23,10 @@ function HomePage() {
 
   const getAllPatients = () => {
     dispatch(actions.getAllPatients())
+  }
+  const getPatientsByDate = () => {
+    const date = getDateString(new Date())
+    dispatch(actions.getPatientsByDate(date))
   }
 
   const changeDoc = (doc) => {
@@ -65,7 +73,16 @@ function HomePage() {
       {/* <TodoList /> */}
       {/* <pre>{JSON.stringify(TodayPatients)}  </pre> */}
       {/* This is HomePage (under development) */}
-      <button onClick={getAllPatients}>Get all patients from database</button>
+      <Box mt={2}>
+        <Grid container justifyContent="space-evenly">
+          <Grid item>
+            <Button variant="contained" color="secondary" onClick={getAllPatients}>Get All Patients</Button>
+          </Grid>
+          <Grid item>
+            <Button variant="contained" color="primary" onClick={getPatientsByDate}>Get all patients For Today</Button>
+          </Grid>
+        </Grid>
+      </Box>
       <CollapsibleTable allPat={patients} handleDocChange={handleDocChange} doc={doc} />
       {/* <EnhancedTable /> */}
     </div>

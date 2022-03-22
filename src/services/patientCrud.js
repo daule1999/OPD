@@ -37,6 +37,11 @@ class PatientCrud {
     console.log("getting all  Patient ...")
     return this.dao.all("select * from Patient")
   }
+  getAllPatientsByDate(date) {
+    console.log("getting all  Patient by date = ", date)
+    return this.dao.all("select * from Patient where dateOfAppoint like ?", ['%' + date + '%']);
+  }
+
   getPatientsById(id) {
     console.log("getting Patient by id  ...", id)
     return this.dao.get(`select * from Patient where Pid=${id}`)
