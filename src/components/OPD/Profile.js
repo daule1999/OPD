@@ -46,7 +46,7 @@ function Profile() {
                   {e.doctorNo && <Typography>Doctor No : {e.doctorNo}</Typography>}
                 </Grid>
                 <Grid item>
-                  {e.staffNo && <Typography>staff No : {e.staffNo}</Typography>}
+                  {e.staffNo && <Typography> Staff No : {e.staffNo}</Typography>}
                 </Grid>
               </Grid>
             })}

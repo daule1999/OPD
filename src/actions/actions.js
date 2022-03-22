@@ -284,7 +284,7 @@ function getPrintData(patient) {
     css: { "font-weight": "700", "font-size": "18px" }
   }, {
     type: 'text',
-    value: 'Mofassil Mod, Khizarsarai Road',
+    value: 'Mofassil Mod, Khizarsarai Road, Gaya',
     style: `text-align:center;`,
     css: { "font-weight": "500", "font-size": "14px" }
   }, {

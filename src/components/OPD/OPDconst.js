@@ -1,6 +1,6 @@
 export const OPDConst = {
   opdName: "ANGELINA LIFE CARE HOSPITAL",
-  address1: "Mofassil Mod, Khizarsarai Road",
+  address1: "Mofassil Mod, Khizarsarai Road, Gaya",
   address2: "",
   landmark: "In front of vishal Petrol pump",
   doctors: [

@@ -20,7 +20,7 @@ export const initState = {
       css: { "font-weight": "700", "font-size": "18px" }
     }, {
       type: 'text',
-      value: 'Mofassil Mod, Khizarsarai Road',
+      value: 'Mofassil Mod, Khizarsarai Road, Gaya',
       style: `text-align:center;`,
       css: { "font-weight": "500", "font-size": "14px" }
     }, {
@@ -74,7 +74,7 @@ export const initState = {
   newTid: { id: 1 },
   OPD: {
     opdName: "ANGELINA LIFE CARE HOSPITAL",
-    address1: "Mofassil Mod, Khizarsarai Road",
+    address1: "Mofassil Mod, Khizarsarai Road, Gaya",
     address2: "",
     landmark: "In front of vishal Petrol pump",
     doctors: [
