@@ -183,7 +183,7 @@ export function reducers(state = initState, action) {
       return {
         ...state,
         TodayPatients: [
-          ...new Map([...state.TodayPatients, ...action.allPatients].map(item => [item["Tid"], item])).values()
+          ...new Map([...state.TodayPatients, ...action.allPatients].map(item => [item["Uid"], item])).values()
         ],
         loading: false
       };
@@ -191,7 +191,7 @@ export function reducers(state = initState, action) {
       return {
         ...state,
         TodayPatients: [
-          ...new Map([...action.allPatients].map(item => [item["Tid"], item])).values()
+          ...new Map([...action.allPatients].map(item => [item["Uid"], item])).values()
         ],
         loading: false
       };
