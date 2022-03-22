@@ -67,6 +67,7 @@ function Row(props) {
         <TableCell align="center">{row.address}</TableCell>
         <TableCell align="center">{row.age}</TableCell>
         <TableCell align="center">{row.gender}</TableCell>
+        <TableCell align="center">{row.phone}</TableCell>
         <TableCell align="center">{row.Uid}</TableCell>
         < TableCell align="center">{row.Tid}</TableCell>
       </TableRow>
@@ -253,6 +254,7 @@ export default function CollapsibleTable({ allPat, handleDocChange, doc }) {
               <TableCell align="center" variant="head">Address</TableCell>
               <TableCell align="center" variant="head">Age</TableCell>
               <TableCell align="center" variant="head">Gender</TableCell>
+              <TableCell align="center" variant="head">Mobile No.</TableCell>
               <TableCell align="center" variant="head">Patient UUId</TableCell>
               <TableCell align="center" variant="head">
                 <TableSortLabel

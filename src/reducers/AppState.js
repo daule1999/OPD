@@ -47,6 +47,7 @@ export const initState = {
         [{ type: 'text', value: "Doctor Name" }, { type: 'text', value: "Dr. Angelina" }],
         [{ type: 'text', value: "Patient Name" }, { type: 'text', value: "Hello" }],
         [{ type: 'text', value: "Address" }, { type: 'text', value: "Gaya" }],
+        [{ type: 'text', value: "Mobile No." }, { type: 'text', value: "........" }],
         [{ type: 'text', value: "Age" }, { type: 'text', value: "26" }],
         [{ type: 'text', value: "Gender" }, { type: 'text', value: "male" }],
         [{ type: 'text', value: "Body Temprature(F)" }, { type: 'text', value: "98" }],

@@ -22,7 +22,23 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+const phoneRegex = /^[6789]\d{9}$/
 
+const checkSpecialCharacter = (e, type) => {
+  if (e.key === ' ' && e.target.value.slice(-1) === ' ') {
+    e.preventDefault()
+  } else if (/^([,-\/\.]+)$/.test(e.key) && /^([,-\/\.]+)$/.test(e.target.value.slice(-1))) {
+    e.preventDefault()
+  } else if (!type && !/^([a-zA-Z0-9 ,-\/\.\_]+)$/.test(e.key)) {
+    e.preventDefault()
+  } else if (type === 'digit' && !/[0-9]+/.test(e.key)) {
+    e.preventDefault()
+  } else if (type === 'alpha' && !/[a-zA-Z ]+/.test(e.key)) {
+    e.preventDefault()
+  } else if (type === 'alphanumeric' && !/[a-zA-Z0-9]+/.test(e.key)) {
+    e.preventDefault()
+  }
+}
 const patientSchema = yup.object().shape({
   name: yup.string().required("Enter a valid Name"),
   address: yup.string().required("Enter a valid Address"),
@@ -30,6 +46,9 @@ const patientSchema = yup.object().shape({
     .positive("Age should be greater than 0")
     .max(150, "Age should be less than 150 years"),
   gender: yup.string().oneOf(['male', 'female'], "Gender should be male or female").required("Enter a valid Gender"),
+  phone: yup.string().optional()
+    // .test('len', 'Please enter 10 digit mobile number', val => val && val.length === 10)
+    .matches(phoneRegex, 'Please enter Valid 10 digit mobile number'),
   currentTemp: yup.number().min(0, "temperature should be greater than 0").max(150, "temperature should be less than 150").optional(),
   currentBp: yup.string().optional(),
   currentOxygen: yup.string().optional(),
@@ -44,6 +63,7 @@ const PatientForm = ({ closeForm, setId }) => {
     address: "",
     age: "",
     gender: "",
+    phone: "",
     currentTemp: "",
     currentBp: "",
     currentOxygen: "",
@@ -186,18 +206,6 @@ const PatientForm = ({ closeForm, setId }) => {
                   helperText={formik.touched.age && formik.errors.age}
                 />
               </Grid>
-              {/* <Grid item>
-                <TextField
-                  fullWidth
-                  id="gender"
-                  name="gender"
-                  label="gender"
-                  value={formik.values.password}
-                  onChange={formik.handleChange}
-                  error={formik.touched.gender && Boolean(formik.errors.gender)}
-                  helperText={formik.touched.gender && formik.errors.gender}
-                />
-              </Grid> */}
               <Grid item p={2}>
                 <TextField
                   id="gender"
@@ -218,6 +226,20 @@ const PatientForm = ({ closeForm, setId }) => {
                     female
                   </MenuItem>
                 </TextField>
+              </Grid>
+              <Grid item>
+                <TextField
+                  fullWidth
+                  id="phone"
+                  name="phone"
+                  label="MobileNo."
+                  value={formik.values.phone}
+                  onChange={formik.handleChange}
+                  onKeyPress={(e) => checkSpecialCharacter(e, 'digit')}
+                  error={formik.touched.phone && Boolean(formik.errors.phone)}
+                  helperText={formik.touched.phone && formik.errors.phone}
+                  inputProps={{ maxLength: '10' }}
+                />
               </Grid>
             </Grid>
             <Grid item container justifyContent='space-evenly' alignItems='center'>

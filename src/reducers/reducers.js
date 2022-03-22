@@ -155,6 +155,7 @@ export function reducers(state = initState, action) {
               [{ type: 'text', value: "Doctor Name" }, { type: 'text', value: state.OPD.doctors[action.patient.doctor - 1].doctorName }],
               [{ type: 'text', value: "Patient Name" }, { type: 'text', value: action.patient.name }],
               [{ type: 'text', value: "Address" }, { type: 'text', value: action.patient.address }],
+              [{ type: 'text', value: "Mobile No." }, { type: 'text', value: action.patient.phone }],
               [{ type: 'text', value: "Age" }, { type: 'text', value: action.patient.age }],
               [{ type: 'text', value: "Gender" }, { type: 'text', value: action.patient.gender }],
               [{ type: 'text', value: "Body Temprature(F)." }, { type: 'text', value: action.patient.currentTemp }],
