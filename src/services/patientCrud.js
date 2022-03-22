@@ -20,7 +20,7 @@ class PatientCrud {
   }
   createTable() {
     console.log("creating table.......")
-    const sql = `CREATE TABLE IF NOT EXISTS Patient(Pid INTEGER primary key,Uid INTEGER ,Tid INTEGER,name text,address text,age INTEGER,gender text,currentTemp INTEGER,currentBp text,currentOxygen text,dateOfAppoint text,dateOfBooking text,sqltime TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)`
+    const sql = `CREATE TABLE IF NOT EXISTS Patient(Pid INTEGER primary key,Uid INTEGER ,Tid INTEGER,name text,address text,age INTEGER,gender text,currentTemp INTEGER,currentBp text,currentOxygen text,dateOfAppoint text,dateOfBooking text,doctor INTEGER DEFAULT 1,sqltime TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)`
     return this.dao.run(sql);
   }
   dropPatientTable() {
@@ -29,9 +29,9 @@ class PatientCrud {
     return this.dao.run(sql);
   }
   insertData(patient) {
-    console.log("insert.....Data ...", patient)
-    return this.dao.run("INSERT INTO Patient (Uid,Tid,name,address,age,gender,currentTemp,currentBp,currentOxygen,dateOfAppoint,dateOfBooking) values(?,?,?,?,?,?,?,?,?,?,?)",
-      [patient.Uid, patient.Tid, patient.name, patient.address, patient.age, patient.gender, patient.currentTemp, patient.currentBp, patient.currentOxygen, patient.dateOfAppoint, patient.dateOfBooking])
+    console.log("insert.....Data ...", patient, patient.doctor)
+    return this.dao.run("INSERT INTO Patient (Uid,Tid,name,address,age,gender,doctor,currentTemp,currentBp,currentOxygen,dateOfAppoint,dateOfBooking) values(?,?,?,?,?,?,?,?,?,?,?,?)",
+      [patient.Uid, patient.Tid, patient.name, patient.address, patient.age, patient.gender, patient.doctor, patient.currentTemp, patient.currentBp, patient.currentOxygen, patient.dateOfAppoint, patient.dateOfBooking])
   }
   getAllPatients() {
     console.log("getting all  Patient ...")

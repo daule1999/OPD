@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -7,14 +7,14 @@ import IconButton from '@material-ui/core/IconButton';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import { TableContainer, TablePagination, TableSortLabel } from '@material-ui/core';
+import { TableContainer, TablePagination, TableSortLabel, TextField, MenuItem } from '@material-ui/core';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-
+import { useSelector } from 'react-redux';
 const useRowStyles = makeStyles({
   root: {
     '& > *': {
@@ -80,9 +80,9 @@ function Row(props) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Temperature</TableCell>
-                    <TableCell>BP</TableCell>
-                    <TableCell align="right">Oxygen</TableCell>
+                    <TableCell>Temperature(F)</TableCell>
+                    <TableCell>Bllod Pressure(BP)</TableCell>
+                    <TableCell align="right">Oxygen Level(BLO)</TableCell>
                     <TableCell align="right">Date Of Appointment</TableCell>
                     <TableCell align="right">Date Of Booking</TableCell>
                   </TableRow>
@@ -161,7 +161,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CollapsibleTable({ TodayPatients }) {
+export default function CollapsibleTable({ allPat, handleDocChange, doc }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const classes = useStyles();
@@ -170,10 +170,10 @@ export default function CollapsibleTable({ TodayPatients }) {
   const [selected, setSelected] = React.useState([]);
   const [dense, setDense] = React.useState(false);
 
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
@@ -223,20 +223,38 @@ export default function CollapsibleTable({ TodayPatients }) {
     handleRequestSort(event, property);
   };
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, TodayPatients.length - page * rowsPerPage);
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, allPat.length - page * rowsPerPage);
+  const doctors = useSelector(state => state.reducers.OPD.doctors)
+  console.log(allPat)
   return (
     <>
       <TableContainer component={Paper}>
         <Table aria-label="collapsible table">
           <TableHead>
             <TableRow>
-              <TableCell />
-              <TableCell>Name</TableCell>
-              <TableCell align="center">Address</TableCell>
-              <TableCell align="center">Age</TableCell>
-              <TableCell align="center">Gender</TableCell>
-              <TableCell align="center">User Id</TableCell>
-              <TableCell align="center">
+              <TableCell style={{ width: "20%" }}>
+                <TextField
+                  id="doctor"
+                  name="doctor"
+                  select
+                  label="Doctor"
+                  // style={{ paddingLeft: "18px", paddingRight: "18px" }}
+                  value={doc}
+                  onChange={handleDocChange}
+                >
+                  {[{ doctorId: 0, doctorName: "All", qualification: "Doctors" }, ...doctors].map((doc) => {
+                    return <MenuItem value={doc.doctorId} >
+                      {`${doc.doctorName} (${doc.qualification})`}
+                    </MenuItem>
+                  })}
+                </TextField>
+              </TableCell>
+              <TableCell variant="head">Name</TableCell>
+              <TableCell align="center" variant="head">Address</TableCell>
+              <TableCell align="center" variant="head">Age</TableCell>
+              <TableCell align="center" variant="head">Gender</TableCell>
+              <TableCell align="center" variant="head">Patient UUId</TableCell>
+              <TableCell align="center" variant="head">
                 <TableSortLabel
                   active={orderBy === "sqltime"}
                   direction={orderBy === "sqltime" ? order : 'asc'}
@@ -252,7 +270,7 @@ export default function CollapsibleTable({ TodayPatients }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {stableSort(TodayPatients, getComparator(order, orderBy))
+            {stableSort(allPat, getComparator(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row, index) => {
                 const isItemSelected = isSelected(row.name);
@@ -265,7 +283,7 @@ export default function CollapsibleTable({ TodayPatients }) {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={TodayPatients.length}
+        count={allPat.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

@@ -86,9 +86,9 @@ const PatientForm = ({ closeForm, setId }) => {
       const newPat = {
         Uid: id,
         Tid: newTid.currentTid,
-        dateOfAppoint: getDateString(new Date()),
         ...values,
-        dateOfBooking: getDateString(selectedDate),
+        dateOfBooking: getDateString(new Date()),
+        dateOfAppoint: getDateString(selectedDate),
       };
       console.log(newPat, " in forms")
       const res = await dispatch(actions.add(newPat))
@@ -131,10 +131,10 @@ const PatientForm = ({ closeForm, setId }) => {
               <Grid item>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <DatePicker
-                    id="dateOfBooking"
+                    id="dateOfAppoint"
                     fullWidth
-                    name="dateOfBooking"
-                    label="Booking Date"
+                    name="dateOfAppoint"
+                    label="Appointment Date"
                     autoOk
                     // style={{ paddingLeft: "18px", paddingRight: "18px" }}
                     value={selectedDate}

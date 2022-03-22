@@ -57,7 +57,7 @@ export const initState = {
         }, {
           type: 'text', value: `Appointment Date : ${Date.now()}`
         }],
-        [{ type: 'text', value: "Fee" }, { type: 'text', value: "200 Rs" }],
+        [{ type: 'text', value: "Fee" }, { type: 'text', value: "300 Rs" }],
       ],
       tableHeaderStyle: 'background-color: #000; color: white;',
       tableBodyStyle: 'border: 0.5px solid #ddd',
@@ -83,7 +83,7 @@ export const initState = {
         qualification: "Surgeon",
         doctorNo: "",
         staffNo: "9472643340",
-        fee: "200"
+        fee: "300"
       },
       {
         doctorId: "2",
@@ -91,7 +91,7 @@ export const initState = {
         qualification: "gynocology",
         doctorNo: "",
         staffNo: "9472643340",
-        fee: "200"
+        fee: "300"
       }
     ]
   },

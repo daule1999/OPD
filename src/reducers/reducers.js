@@ -162,7 +162,7 @@ export function reducers(state = initState, action) {
               }, {
                 type: 'text', value: `Appointment Date : ${action.patient.dateOfAppoint}`
               }],
-              [{ type: 'text', value: "Fee" }, { type: 'text', value: "200 Rs" }],
+              [{ type: 'text', value: "Fee" }, { type: 'text', value: "300 Rs" }],
             ],
             tableHeaderStyle: 'background-color: #000; color: white;',
             tableBodyStyle: 'border: 0.5px solid #ddd',

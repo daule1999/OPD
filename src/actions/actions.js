@@ -211,12 +211,15 @@ function add(patient) {
       console.group("before actions ", patient)
       const res = await services.addPatient(patient)
       console.log(res, " after actions")
-      const tidRes = await services.setTid(patient.dateOfBooking)
-      console.log(tidRes, " after actions tidRes")
-      dispatch({ type: SET_TID_SUCCESS, tidRes })
-      dispatch(success(patient))
-      return res
-
+      if (res) {
+        const tidRes = await services.setTid(patient.dateOfBooking)
+        console.log(tidRes, " after actions tidRes")
+        dispatch({ type: SET_TID_SUCCESS, tidRes })
+        dispatch(success(patient))
+        return res
+      } else {
+        dispatch(failure("failed to insert"));
+      }
     } catch (error) {
       dispatch(failure(error.toString()));
     }
@@ -310,11 +313,11 @@ function getPrintData(patient) {
       [{ type: 'text', value: "BP" }, { type: 'text', value: patient.currentBp }],
       [{ type: 'text', value: "Oxygen" }, { type: 'text', value: patient.currentOxygen }],
       [{
-        type: 'text', value: `dateOfAppoint :  ${patient.dateOfAppoint}`
+        type: 'text', value: `Booking Date :  ${patient.dateOfBooking}`
       }, {
-        type: 'text', value: `dateOfBooking :  ${patient.dateOfBooking}`
+        type: 'text', value: `Appointment Date :  ${patient.dateOfAppoint}`
       }],
-      [{ type: 'text', value: "Fee" }, { type: 'text', value: "200 Rs" }]
+      [{ type: 'text', value: "Fee" }, { type: 'text', value: "300 Rs" }]
     ],
     value: 'table',
     tableHeaderStyle: 'background-color: #000; color: white;',
