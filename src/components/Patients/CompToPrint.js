@@ -48,7 +48,7 @@ export class CompToPrint extends Component {
               }
               {
                 obj.type === 'table' && <div key={obj.value}>
-                  <Table>
+                  <Table size='small'>
                     <TableBody>
                       {obj.tableBody && obj.tableBody.map((row, inx) => {
                         console.log("rowVal ", row)
